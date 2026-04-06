@@ -1,0 +1,9 @@
+{
+  "name": "qus0in-dev-blog",
+  "scripts": {
+    "commit:check": "git diff --cached --quiet && echo 'No staged changes.' && exit 1",
+    "commit:msg": "{ cat prompts/git-commit.txt; printf '\\n\\n'; git diff --cached; } | gemini | head -n 1 | tr -d '\\r'",
+    "commit": "pnpm run commit:check && MSG=\"$(pnpm run -s commit:msg)\" && git commit -m \"$MSG\""
+  },
+  "packageManager": "pnpm@10.33.0"
+}
