@@ -5,7 +5,7 @@ description: Use when drafting, validating, staging, and committing git changes 
 
 # Git Convention Commit
 
-Use this skill when the user asks to create a commit, suggest commit messages, validate commit wording, stage changes, or align a commit with the repository's git convention.
+Use this skill when the user asks to create a commit, suggest commit messages, validate commit wording, stage changes, align a commit with the repository's git convention, or decide whether the project version should move with the current change set.
 
 ## Output format
 
@@ -38,8 +38,9 @@ If a scope is not useful, omit it:
 3. Choose the best category using `references/categories.md`.
 4. Add a scope only when it improves scanability.
 5. Write a concise Korean subject that explains the main change.
-6. Before finalizing, verify that English appears only in the category and optional scope.
-7. If the user asked for an actual commit, run `git commit -m "<message>"` after confirming there is something staged.
+6. Assess the current change size and user-visible impact, then decide whether `package.json` `version` should be updated before the commit.
+7. Before finalizing, verify that English appears only in the category and optional scope.
+8. If the user asked for an actual commit, run `git commit -m "<message>"` after confirming there is something staged.
 
 ## Execution rules
 
@@ -48,6 +49,17 @@ If a scope is not useful, omit it:
 - Avoid interactive git flows.
 - If unrelated changes are present and the user did not ask to include them, stage only the relevant files.
 - If the user asked to commit the current state without narrowing scope, treat tracked modifications, deletions, and newly added files as in scope.
+- When `package.json` exists, inspect the current change set and decide whether a version bump is warranted before committing.
+
+## Version rule
+
+- Use the current staged and unstaged scope to judge change severity.
+- Skip version updates for docs-only, style-only, or internal maintenance work unless the user explicitly asked for a release bump.
+- Apply a patch bump for small fixes and low-risk maintenance that changes runtime behavior.
+- Apply a minor bump for visible features, meaningful UX changes, new pages, new automation that affects shipped output, or bundled asset additions that change the product surface.
+- Apply a major bump only when the change is clearly breaking for consumers or public integration points.
+- If a version bump is needed, update `package.json` before staging the final commit set.
+- If the repository is not using package versioning as part of its workflow, keep the version unchanged.
 
 ## Examples
 
@@ -65,6 +77,7 @@ feat: 푸터 링크와 커밋 스킬 추가
 - Is the category an allowed English conventional-commit type?
 - Is the scope, if present, English and concise?
 - Is the main subject Korean?
+- If `package.json` exists, does the chosen version bump match the actual change severity?
 - Does the subject describe the primary change rather than an implementation detail?
 - Would this message still make sense in `git log --oneline`?
 
