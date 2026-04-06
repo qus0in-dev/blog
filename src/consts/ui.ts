@@ -17,5 +17,6 @@ export const UI_LABELS = {
   archive: "아카이브",
   newer: "이전 글",
   older: "다음 글",
+  relatedPosts: "추천 글",
   contents: "목차",
 } as const;

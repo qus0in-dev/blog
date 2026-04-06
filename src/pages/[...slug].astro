@@ -1,14 +1,20 @@
 ---
 export const prerender = false;
 
-import { getEntry, render } from "astro:content";
+import { render } from "astro:content";
 import { PostPage } from "../components/blog/post-page";
 import { SITE_AUTHOR, SITE_NAME, SITE_URL } from "../consts/site";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { getAdjacentPosts, getPublishedPosts } from "../lib/blog";
+import {
+  getAdjacentPosts,
+  getPostPublicSlug,
+  getPublishedPostBySlug,
+  getPublishedPosts,
+  getRelatedPosts,
+} from "../lib/blog";
 
 const slug = Astro.params.slug;
-const post = slug ? await getEntry("blog", slug) : undefined;
+const post = slug ? await getPublishedPostBySlug(slug) : undefined;
 
 if (!post || post.data.draft) {
   Astro.response.status = 404;
@@ -18,6 +24,7 @@ let Content;
 let headings = [];
 let newerPost;
 let olderPost;
+let relatedPosts = [];
 let structuredData;
 
 if (post && !post.data.draft) {
@@ -29,6 +36,7 @@ if (post && !post.data.draft) {
   const adjacentPosts = getAdjacentPosts(posts, post.id);
   newerPost = adjacentPosts.newerPost;
   olderPost = adjacentPosts.olderPost;
+  relatedPosts = getRelatedPosts(posts, post);
 
   structuredData = {
     "@context": "https://schema.org",
@@ -45,9 +53,9 @@ if (post && !post.data.draft) {
       "@type": "Person",
       name: SITE_AUTHOR,
     },
-    mainEntityOfPage: `${SITE_URL}/${post.id}/`,
-    url: `${SITE_URL}/${post.id}/`,
-    image: `${SITE_URL}/og/${post.id}.png`,
+    mainEntityOfPage: `${SITE_URL}/${getPostPublicSlug(post)}/`,
+    url: `${SITE_URL}/${getPostPublicSlug(post)}/`,
+    image: `${SITE_URL}/og/${getPostPublicSlug(post)}.png`,
     keywords: post.data.tags,
     inLanguage: "ko-KR",
     isPartOf: {
@@ -64,7 +72,7 @@ if (post && !post.data.draft) {
     <BaseLayout
       title={`${post.data.title} | ${SITE_NAME}`}
       description={post.data.description}
-      ogImage={`/og/${post.id}.png`}
+      ogImage={`/og/${getPostPublicSlug(post)}.png`}
       ogType="article"
       publishedTime={post.data.pubDate.toISOString()}
       modifiedTime={(post.data.updatedDate ?? post.data.pubDate).toISOString()}
@@ -76,6 +84,7 @@ if (post && !post.data.draft) {
         headings={headings}
         newerPost={newerPost}
         olderPost={olderPost}
+        relatedPosts={relatedPosts}
       >
         <Content />
       </PostPage>

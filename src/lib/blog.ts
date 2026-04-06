@@ -2,6 +2,10 @@ import { getCollection, type CollectionEntry } from "astro:content";
 
 export type BlogPost = CollectionEntry<"blog">;
 
+export function getPostPublicSlug(post: BlogPost) {
+  return post.data.slug ?? post.id.split("/").filter(Boolean).at(-1) ?? post.id;
+}
+
 export async function getPublishedPosts() {
   return (await getCollection("blog", ({ data }) => !data.draft)).sort(
     (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
@@ -38,4 +42,30 @@ export function getAdjacentPosts(posts: BlogPost[], currentId: string) {
     newerPost: index > 0 ? posts[index - 1] : undefined,
     olderPost: index >= 0 && index < posts.length - 1 ? posts[index + 1] : undefined,
   };
+}
+
+export function getRelatedPosts(posts: BlogPost[], currentPost: BlogPost, limit = 3) {
+  const currentTags = new Set(currentPost.data.tags);
+
+  return posts
+    .filter((post) => post.id !== currentPost.id)
+    .map((post) => ({
+      post,
+      sharedTagCount: post.data.tags.filter((tag) => currentTags.has(tag)).length,
+    }))
+    .filter(({ sharedTagCount }) => sharedTagCount > 0)
+    .sort((a, b) => {
+      if (b.sharedTagCount !== a.sharedTagCount) {
+        return b.sharedTagCount - a.sharedTagCount;
+      }
+
+      return b.post.data.pubDate.valueOf() - a.post.data.pubDate.valueOf();
+    })
+    .slice(0, limit)
+    .map(({ post }) => post);
+}
+
+export async function getPublishedPostBySlug(slug: string) {
+  const posts = await getPublishedPosts();
+  return posts.find((post) => getPostPublicSlug(post) === slug);
 }

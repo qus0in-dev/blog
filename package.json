@@ -7,7 +7,8 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "generate:og": "node scripts/generate-og.mjs",
+    "build": "pnpm run generate:og && astro build",
     "preview": "astro preview",
     "astro": "astro",
     "commit:check": "if git diff --cached --quiet; then echo 'No staged changes.'; exit 1; fi",

@@ -1,6 +1,6 @@
 import { ArrowLeft, ArrowRight, CornerDownLeft } from "lucide-react";
 
-import type { BlogPost } from "@/lib/blog";
+import { getPostPublicSlug, type BlogPost } from "@/lib/blog";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
@@ -17,6 +17,7 @@ type Props = {
   headings: Heading[];
   newerPost?: BlogPost;
   olderPost?: BlogPost;
+  relatedPosts?: BlogPost[];
   children: any;
 };
 
@@ -33,6 +34,7 @@ export function PostPage({
   headings,
   newerPost,
   olderPost,
+  relatedPosts = [],
   children,
 }: Props) {
   return (
@@ -51,7 +53,7 @@ export function PostPage({
         <article className="min-w-0">
           <header className="space-y-5">
             <div className="space-y-3">
-              <h1 className="max-w-4xl text-4xl font-semibold tracking-[-0.06em] sm:text-5xl lg:text-6xl">
+              <h1 className="font-display max-w-4xl text-4xl font-semibold tracking-[-0.06em] sm:text-5xl lg:text-6xl">
                 {post.data.title}
               </h1>
               <p className="max-w-2xl text-sm leading-6 text-muted-foreground sm:text-base">
@@ -76,17 +78,55 @@ export function PostPage({
 
           <Separator className="my-8" />
 
+          {relatedPosts.length > 0 ? (
+            <>
+              <section className="space-y-4">
+                <div className="text-xs font-medium uppercase tracking-[0.18em] text-muted-foreground">
+                  {UI_LABELS.relatedPosts}
+                </div>
+                <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+                  {relatedPosts.map((relatedPost) => (
+                    <a
+                      key={relatedPost.id}
+                      href={`/${getPostPublicSlug(relatedPost)}/`}
+                      className="rounded-[1.5rem] border bg-card p-5 transition-colors hover:bg-accent"
+                    >
+                      <div className="mb-3 flex flex-wrap gap-2">
+                        {relatedPost.data.tags
+                          .filter((tag) => post.data.tags.includes(tag))
+                          .slice(0, 2)
+                          .map((tag) => (
+                            <Badge key={tag} variant="outline">
+                              #{tag}
+                            </Badge>
+                          ))}
+                      </div>
+                      <div className="font-display text-base font-semibold tracking-[-0.03em]">
+                        {relatedPost.data.title}
+                      </div>
+                      <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                        {relatedPost.data.description}
+                      </p>
+                    </a>
+                  ))}
+                </div>
+              </section>
+
+              <Separator className="my-8" />
+            </>
+          ) : null}
+
           <nav className="grid gap-3 sm:grid-cols-2">
             {newerPost ? (
               <a
-                href={`/${newerPost.id}/`}
+                href={`/${getPostPublicSlug(newerPost)}/`}
                 className="group rounded-[1.5rem] border bg-card p-5 transition-colors hover:bg-accent"
               >
-                <div className="mb-3 inline-flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.18em] text-muted-foreground">
+                <div className="mb-3 inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.18em] text-muted-foreground">
                   <ArrowLeft className="size-3.5" />
                   {UI_LABELS.newer}
                 </div>
-                <div className="text-base font-semibold tracking-[-0.03em]">
+                <div className="font-display text-base font-semibold tracking-[-0.03em]">
                   {newerPost.data.title}
                 </div>
               </a>
@@ -95,14 +135,14 @@ export function PostPage({
             )}
             {olderPost ? (
               <a
-                href={`/${olderPost.id}/`}
+                href={`/${getPostPublicSlug(olderPost)}/`}
                 className="group rounded-[1.5rem] border bg-card p-5 text-left transition-colors hover:bg-accent"
               >
-                <div className="mb-3 inline-flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.18em] text-muted-foreground">
+                <div className="mb-3 inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.18em] text-muted-foreground">
                   {UI_LABELS.older}
                   <ArrowRight className="size-3.5" />
                 </div>
-                <div className="text-base font-semibold tracking-[-0.03em]">
+                <div className="font-display text-base font-semibold tracking-[-0.03em]">
                   {olderPost.data.title}
                 </div>
               </a>
@@ -114,7 +154,7 @@ export function PostPage({
           {headings.length > 0 ? (
             <Card className="rounded-[1.5rem] bg-card/70">
               <CardContent className="space-y-3 p-5">
-                <div className="text-[11px] font-medium uppercase tracking-[0.18em] text-muted-foreground">
+                <div className="text-xs font-medium uppercase tracking-[0.18em] text-muted-foreground">
                   {UI_LABELS.contents}
                 </div>
                 <ul className="space-y-2">

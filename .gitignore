@@ -26,3 +26,5 @@ pnpm-debug.log*
 .wrangler
 .vscode
 .pnpm-store
+
+public/og
