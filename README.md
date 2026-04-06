@@ -1,43 +1,26 @@
-# Astro Starter Kit: Minimal
+# qus0in dev blog
 
-```sh
-pnpm create astro@latest -- --template minimal
-```
+Astro 기반 기술 블로그입니다. 레이아웃은 `Pico CSS`를 기반으로 구성했고,
+직접 작성한 CSS는 색상 변수와 블로그 정보 구조를 위한 최소한의 오버라이드만
+포함합니다.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Design direction
 
-## 🚀 Project Structure
+- 적용형 레이아웃: 모바일에서는 단일 컬럼, 넓은 화면에서는 본문과 사이드바를 분리
+- 제한된 색 사용: 거의 흑백에 가까운 중성 팔레트
+- 기술 블로그 구조: 아카이브, 태그, 목차, 메타데이터, RSS 노출
 
-Inside of your Astro project, you'll see the following folders and files:
+## Stack
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+- Astro
+- Astro Content Collections
+- Pico CSS
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## Commands
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `pnpm install`             | Installs dependencies                            |
-| `pnpm dev`             | Starts local dev server at `localhost:4321`      |
-| `pnpm build`           | Build your production site to `./dist/`          |
-| `pnpm preview`         | Preview your build locally, before deploying     |
-| `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `pnpm astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+| Command | Action |
+| :-- | :-- |
+| `pnpm dev` | 개발 서버 실행 |
+| `pnpm build` | 프로덕션 빌드 |
+| `pnpm preview` | 빌드 결과 미리보기 |
+| `pnpm deploy` | Cloudflare 배포 |

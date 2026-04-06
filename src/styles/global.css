@@ -1,0 +1,167 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@plugin "@tailwindcss/typography";
+
+@font-face {
+  font-family: "Paperlogy";
+  src: url("/fonts/Paperlogy-7Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Pretendard";
+  src: url("/fonts/Pretendard-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Noto Sans KR";
+  src: url("/fonts/NotoSansKR-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme inline {
+  --font-sans: "Noto Sans KR", system-ui, sans-serif;
+  --font-mono: "Geist Mono", "SFMono-Regular", "Consolas", monospace;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+:root {
+  --background: #f7f5ef;
+  --foreground: #111111;
+  --card: #fdfcf8;
+  --card-foreground: #111111;
+  --popover: #fdfcf8;
+  --popover-foreground: #111111;
+  --primary: #111111;
+  --primary-foreground: #f7f5ef;
+  --secondary: #ece8de;
+  --secondary-foreground: #111111;
+  --muted: #ece8de;
+  --muted-foreground: #5f5a52;
+  --accent: #e5dfd1;
+  --accent-foreground: #111111;
+  --border: #d8d1c4;
+  --input: #d8d1c4;
+  --ring: #111111;
+  --radius: 1rem;
+  --font-display: "Paperlogy", "Noto Sans KR", sans-serif;
+  --font-body: "Pretendard", "Noto Sans KR", sans-serif;
+  --font-ui: "Noto Sans KR", sans-serif;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    @apply scroll-smooth;
+    font-size: 17px;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: var(--font-ui);
+    line-height: 1.6;
+    background-image:
+      linear-gradient(to bottom, rgba(17, 17, 17, 0.03), rgba(17, 17, 17, 0)),
+      linear-gradient(to right, rgba(17, 17, 17, 0.025) 1px, transparent 1px);
+    background-size: 100% 100%, 24px 24px;
+  }
+
+  p,
+  li,
+  dd,
+  dt,
+  blockquote,
+  input,
+  textarea,
+  select {
+    font-family: var(--font-body);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-display);
+  }
+
+  a {
+    @apply transition-colors;
+  }
+
+  ::selection {
+    @apply bg-foreground text-background;
+  }
+
+  .prose,
+  .prose p,
+  .prose li,
+  .prose blockquote,
+  .prose td,
+  .prose th {
+    font-family: var(--font-body);
+  }
+
+  .prose :where(h1, h2, h3, h4, h5, h6) {
+    font-family: var(--font-display);
+  }
+
+  .prose {
+    font-size: 1.05rem;
+    line-height: 1.8;
+  }
+
+  small,
+  .text-xs {
+    font-size: 0.875rem;
+  }
+
+  .text-sm {
+    font-size: 0.95rem;
+  }
+}
+
+@layer utilities {
+  .font-display {
+    font-family: var(--font-display);
+  }
+
+  .font-body {
+    font-family: var(--font-body);
+  }
+
+  .font-ui {
+    font-family: var(--font-ui);
+  }
+}

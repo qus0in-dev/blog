@@ -1,17 +1,83 @@
 ---
+export const prerender = false;
 
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { HomePage } from "../components/blog/home-page";
+import {
+  SITE_AUTHOR,
+  SITE_DESCRIPTION,
+  SITE_NAME,
+  SITE_TITLE,
+  SITE_URL,
+} from "../consts/site";
+import { getBlogMeta } from "../lib/blog";
+
+const POSTS_PER_PAGE = 10;
+const { posts, tags, totalPosts, latestUpdate } = await getBlogMeta();
+const activeTag = Astro.url.searchParams.get("tag");
+const searchQuery = Astro.url.searchParams.get("q")?.trim() ?? "";
+const requestedPage = Number(Astro.url.searchParams.get("page") ?? "1");
+const searchedPosts = searchQuery
+  ? posts.filter((post) => {
+      const keyword = searchQuery.toLocaleLowerCase();
+      const haystack = [
+        post.data.title,
+        post.data.description,
+        ...post.data.tags,
+      ]
+        .join(" ")
+        .toLocaleLowerCase();
+
+      return haystack.includes(keyword);
+    })
+  : posts;
+const filteredPosts = activeTag
+  ? searchedPosts.filter((post) => post.data.tags.includes(activeTag))
+  : searchedPosts;
+const totalPages = Math.max(1, Math.ceil(filteredPosts.length / POSTS_PER_PAGE));
+const currentPage = Math.min(
+  Math.max(Number.isFinite(requestedPage) ? requestedPage : 1, 1),
+  totalPages
+);
+const paginatedPosts = filteredPosts.slice(
+  (currentPage - 1) * POSTS_PER_PAGE,
+  currentPage * POSTS_PER_PAGE
+);
+const noindex = Boolean(activeTag || searchQuery || currentPage > 1);
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "Blog",
+  name: SITE_NAME,
+  description: SITE_DESCRIPTION,
+  url: SITE_URL,
+  inLanguage: "ko-KR",
+  author: {
+    "@type": "Person",
+    name: SITE_AUTHOR,
+  },
+  publisher: {
+    "@type": "Person",
+    name: SITE_AUTHOR,
+  },
+};
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout
+  title={SITE_TITLE}
+  description={SITE_DESCRIPTION}
+  ogImage="/og/site.png"
+  noindex={noindex}
+  structuredData={structuredData}
+>
+  <HomePage
+    posts={paginatedPosts}
+    tags={tags}
+    totalPosts={totalPosts}
+    latestUpdate={latestUpdate}
+    activeTag={activeTag}
+    searchQuery={searchQuery}
+    currentPage={currentPage}
+    totalPages={totalPages}
+    filteredCount={filteredPosts.length}
+  />
+</BaseLayout>
