@@ -1,0 +1,4 @@
+interface:
+  display_name: "Git Convention Commit"
+  short_description: "영문 카테고리와 한글 메시지 규칙으로 add 후 커밋"
+  default_prompt: "Use $git-convention-commit to stage the intended changes and commit them with an English category and a Korean main subject."

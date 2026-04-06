@@ -4,6 +4,8 @@ export const SITE_URL = "https://blog.qus0in.dev";
 export const SITE_NAME = SITE_TITLE;
 export const SITE_LOCALE = "ko_KR";
 export const SITE_AUTHOR = "qus0in";
+export const SITE_X_URL = "https://x.com/qus0in";
+export const SITE_GITHUB_URL = "https://github.com/qus0in";
 export const SITE_KEYWORDS = [
   "기술 블로그",
   "개발 노트",

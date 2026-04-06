@@ -11,9 +11,6 @@
     "build": "pnpm run generate:og && astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "commit:check": "if git diff --cached --quiet; then echo 'No staged changes.'; exit 1; fi",
-    "commit:msg": "{ cat prompts/git-commit.txt; printf '\\n\\n'; git diff --cached; } | gemini | head -n 1 | tr -d '\\r'",
-    "commit": "pnpm run -s commit:check && MSG=\"$(pnpm run -s commit:msg)\" && git commit -m \"$MSG\"",
     "generate-types": "wrangler types",
     "deploy": "pnpm build && wrangler deploy"
   },

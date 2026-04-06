@@ -29,6 +29,36 @@ function formatDate(date: Date) {
   }).format(date);
 }
 
+function ContentsCard({ headings }: { headings: Heading[] }) {
+  if (headings.length === 0) {
+    return null;
+  }
+
+  return (
+    <Card className="rounded-[1.5rem] bg-card/70">
+      <CardContent className="space-y-3 p-5">
+        <div className="text-xs font-medium uppercase tracking-[0.18em] text-muted-foreground">
+          {UI_LABELS.contents}
+        </div>
+        <ul className="space-y-2">
+          {headings
+            .filter((heading) => heading.depth <= 3)
+            .map((heading) => (
+              <li key={heading.slug}>
+                <a
+                  href={`#${heading.slug}`}
+                  className="text-sm text-muted-foreground hover:text-foreground"
+                >
+                  {heading.text}
+                </a>
+              </li>
+            ))}
+        </ul>
+      </CardContent>
+    </Card>
+  );
+}
+
 export function PostPage({
   post,
   headings,
@@ -77,6 +107,15 @@ export function PostPage({
           </div>
 
           <Separator className="my-8" />
+
+          {headings.length > 0 ? (
+            <>
+              <div className="lg:hidden">
+                <ContentsCard headings={headings} />
+              </div>
+              <Separator className="my-8 lg:hidden" />
+            </>
+          ) : null}
 
           {relatedPosts.length > 0 ? (
             <>
@@ -150,30 +189,8 @@ export function PostPage({
           </nav>
         </article>
 
-        <aside className="space-y-4">
-          {headings.length > 0 ? (
-            <Card className="rounded-[1.5rem] bg-card/70">
-              <CardContent className="space-y-3 p-5">
-                <div className="text-xs font-medium uppercase tracking-[0.18em] text-muted-foreground">
-                  {UI_LABELS.contents}
-                </div>
-                <ul className="space-y-2">
-                  {headings
-                    .filter((heading) => heading.depth <= 3)
-                    .map((heading) => (
-                      <li key={heading.slug}>
-                        <a
-                          href={`#${heading.slug}`}
-                          className="text-sm text-muted-foreground hover:text-foreground"
-                        >
-                          {heading.text}
-                        </a>
-                      </li>
-                    ))}
-                </ul>
-              </CardContent>
-            </Card>
-          ) : null}
+        <aside className="hidden space-y-4 lg:block">
+          <ContentsCard headings={headings} />
         </aside>
       </section>
     </main>

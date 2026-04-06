@@ -1,11 +1,13 @@
 ---
 import {
   SITE_DESCRIPTION,
+  SITE_GITHUB_URL,
   SITE_KEYWORDS,
   SITE_LOCALE,
   SITE_NAME,
   SITE_TITLE,
   SITE_URL,
+  SITE_X_URL,
 } from "../consts/site";
 import "../styles/global.css";
 
@@ -47,6 +49,11 @@ const structuredDataJson = structuredData
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
     <meta name="description" content={description} />
     <meta name="keywords" content={keywords.join(", ")} />
     <meta name="robots" content={robots} />
@@ -89,5 +96,43 @@ const structuredDataJson = structuredData
       </nav>
     </header>
     <slot />
+    <footer class="mx-auto w-full max-w-7xl px-4 pb-3 sm:px-6 lg:px-8">
+      <div class="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-sm text-muted-foreground sm:justify-end">
+        <a
+          href={SITE_X_URL}
+          target="_blank"
+          rel="noreferrer"
+          class="inline-flex items-center gap-2 hover:text-foreground"
+        >
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 24 24"
+            class="size-4 fill-current"
+          >
+            <path
+              d="M18.901 1.153h3.68l-8.04 9.19L24 22.847h-7.406l-5.8-7.584-6.639 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932zM17.61 20.645h2.039L6.486 3.24H4.298z"
+            ></path>
+          </svg>
+          <span>qus0in</span>
+        </a>
+        <a
+          href={SITE_GITHUB_URL}
+          target="_blank"
+          rel="noreferrer"
+          class="inline-flex items-center gap-2 hover:text-foreground"
+        >
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 24 24"
+            class="size-4 fill-current"
+          >
+            <path
+              d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.292 9.39 7.86 10.91.575.106.785-.25.785-.556 0-.274-.01-1-.015-1.963-3.197.695-3.872-1.54-3.872-1.54-.523-1.329-1.277-1.683-1.277-1.683-1.044-.714.08-.699.08-.699 1.154.081 1.761 1.186 1.761 1.186 1.026 1.758 2.692 1.25 3.348.956.104-.743.402-1.25.731-1.537-2.552-.29-5.236-1.276-5.236-5.68 0-1.255.449-2.282 1.184-3.086-.119-.29-.513-1.46.112-3.044 0 0 .965-.309 3.162 1.179A11.02 11.02 0 0 1 12 6.08c.973.004 1.953.132 2.868.387 2.195-1.488 3.159-1.179 3.159-1.179.627 1.584.233 2.754.114 3.044.737.804 1.183 1.831 1.183 3.086 0 4.415-2.688 5.387-5.25 5.672.413.355.781 1.055.781 2.126 0 1.535-.014 2.773-.014 3.15 0 .309.207.668.79.555C20.21 21.386 23.5 17.078 23.5 12 23.5 5.65 18.35.5 12 .5Z"
+            ></path>
+          </svg>
+          <span>qus0in</span>
+        </a>
+      </div>
+    </footer>
   </body>
 </html>
