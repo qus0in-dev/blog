@@ -1,0 +1,93 @@
+---
+import {
+  SITE_DESCRIPTION,
+  SITE_KEYWORDS,
+  SITE_LOCALE,
+  SITE_NAME,
+  SITE_TITLE,
+  SITE_URL,
+} from "../consts/site";
+import "../styles/global.css";
+
+interface Props {
+  title: string;
+  description: string;
+  ogImage?: string;
+  ogType?: "website" | "article";
+  noindex?: boolean;
+  publishedTime?: string;
+  modifiedTime?: string;
+  keywords?: string[];
+  structuredData?: Record<string, unknown> | Record<string, unknown>[];
+}
+
+const {
+  title,
+  description,
+  ogImage = "/og.svg",
+  ogType = "website",
+  noindex = false,
+  publishedTime,
+  modifiedTime,
+  keywords = [...SITE_KEYWORDS],
+  structuredData,
+} = Astro.props;
+const site = Astro.site ?? new URL(SITE_URL);
+const canonical = new URL(Astro.url.pathname, site);
+const ogImageUrl = new URL(ogImage, site);
+const robots = noindex ? "noindex, nofollow" : "index, follow";
+const structuredDataJson = structuredData
+  ? JSON.stringify(structuredData)
+  : undefined;
+---
+
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="keywords" content={keywords.join(", ")} />
+    <meta name="robots" content={robots} />
+    <meta name="author" content={SITE_NAME} />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="/rss.xml" />
+    <meta property="og:site_name" content={SITE_NAME} />
+    <meta property="og:locale" content={SITE_LOCALE} />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:type" content="image/svg+xml" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+    {publishedTime && <meta property="article:published_time" content={publishedTime} />}
+    {modifiedTime && <meta property="article:modified_time" content={modifiedTime} />}
+    {structuredDataJson && (
+      <script type="application/ld+json" set:html={structuredDataJson} />
+    )}
+  </head>
+  <body>
+    <header class="mx-auto w-full max-w-7xl px-4 pt-4 sm:px-6 lg:px-8">
+      <nav class="flex items-center justify-between border bg-card/80 px-4 py-3 backdrop-blur sm:px-6">
+        <a
+          href="/"
+          class="text-sm font-semibold uppercase tracking-[0.18em] text-foreground"
+        >
+          {SITE_TITLE}
+        </a>
+        <div class="flex items-center gap-4 text-xs font-medium uppercase tracking-[0.18em] text-muted-foreground">
+          <a href="/">archive</a>
+          <a href="/rss.xml">rss</a>
+        </div>
+      </nav>
+    </header>
+    <slot />
+  </body>
+</html>

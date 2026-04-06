@@ -1,5 +1,6 @@
 import rss from "@astrojs/rss";
 import { getCollection } from "astro:content";
+import { SITE_DESCRIPTION, SITE_TITLE, SITE_URL } from "../consts/site";
 
 export async function GET(context: any) {
   const posts = await getCollection("blog", ({ data }) => !data.draft);
@@ -13,9 +14,9 @@ export async function GET(context: any) {
     }));
 
   return rss({
-    title: "qus0in dev blog",
-    description: "RSS feed for qus0in dev blog",
-    site: context.site ?? "https://example.com",
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+    site: context.site ?? SITE_URL,
     items,
   });
 }

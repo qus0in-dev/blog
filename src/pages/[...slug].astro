@@ -1,33 +1,105 @@
 ---
-import { getCollection, render } from "astro:content";
+export const prerender = false;
 
-export async function getStaticPaths() {
-  const posts = await getCollection("blog", ({ data }) => !data.draft);
+import { getEntry, render } from "astro:content";
+import { PostPage } from "../components/blog/post-page";
+import { SITE_AUTHOR, SITE_NAME, SITE_URL } from "../consts/site";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { getAdjacentPosts, getPublishedPosts } from "../lib/blog";
 
-  return posts.map((post) => ({
-    params: { slug: post.id },
-    props: { post },
-  }));
+const slug = Astro.params.slug;
+const post = slug ? await getEntry("blog", slug) : undefined;
+
+if (!post || post.data.draft) {
+  Astro.response.status = 404;
 }
 
-const { post } = Astro.props;
-const { Content } = await render(post);
+let Content;
+let headings = [];
+let newerPost;
+let olderPost;
+let structuredData;
+
+if (post && !post.data.draft) {
+  const rendered = await render(post);
+  Content = rendered.Content;
+  headings = rendered.headings;
+
+  const posts = await getPublishedPosts();
+  const adjacentPosts = getAdjacentPosts(posts, post.id);
+  newerPost = adjacentPosts.newerPost;
+  olderPost = adjacentPosts.olderPost;
+
+  structuredData = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.data.title,
+    description: post.data.description,
+    datePublished: post.data.pubDate.toISOString(),
+    dateModified: (post.data.updatedDate ?? post.data.pubDate).toISOString(),
+    author: {
+      "@type": "Person",
+      name: SITE_AUTHOR,
+    },
+    publisher: {
+      "@type": "Person",
+      name: SITE_AUTHOR,
+    },
+    mainEntityOfPage: `${SITE_URL}/${post.id}/`,
+    url: `${SITE_URL}/${post.id}/`,
+    image: `${SITE_URL}/og/${post.id}.svg`,
+    keywords: post.data.tags,
+    inLanguage: "ko-KR",
+    isPartOf: {
+      "@type": "Blog",
+      name: SITE_NAME,
+      url: SITE_URL,
+    },
+  };
+}
 ---
 
-<html lang="ko">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <title>{post.data.title}</title>
-  </head>
-  <body>
-    <main>
-      <a href="/">Back to blog</a>
-      <article>
-        <h1>{post.data.title}</h1>
-        <p>{post.data.description}</p>
+{
+  post && Content ? (
+    <BaseLayout
+      title={`${post.data.title} | ${SITE_NAME}`}
+      description={post.data.description}
+      ogImage={`/og/${post.id}.svg`}
+      ogType="article"
+      publishedTime={post.data.pubDate.toISOString()}
+      modifiedTime={(post.data.updatedDate ?? post.data.pubDate).toISOString()}
+      keywords={post.data.tags}
+      structuredData={structuredData}
+    >
+      <PostPage
+        post={post}
+        headings={headings}
+        newerPost={newerPost}
+        olderPost={olderPost}
+      >
         <Content />
-      </article>
-    </main>
-  </body>
-</html>
+      </PostPage>
+    </BaseLayout>
+  ) : (
+    <BaseLayout
+      title={`404 | ${SITE_NAME}`}
+      description="요청한 글을 찾을 수 없습니다."
+      noindex={true}
+    >
+      <main class="mx-auto flex min-h-[60vh] w-full max-w-3xl items-center px-4 py-16 sm:px-6 lg:px-8">
+        <section class="w-full border bg-card/70 p-8">
+          <p class="text-sm text-muted-foreground">404</p>
+          <h1 class="mt-2 text-3xl font-semibold tracking-[-0.04em] text-foreground">
+            글을 찾을 수 없습니다.
+          </h1>
+          <p class="mt-3 text-muted-foreground">
+            주소가 잘못되었거나 공개되지 않은 글입니다.
+          </p>
+          <p class="mt-6">
+            <a href="/" class="underline underline-offset-4">아카이브로 이동</a>
+          </p>
+        </section>
+      </main>
+    </BaseLayout>
+  )
+}
