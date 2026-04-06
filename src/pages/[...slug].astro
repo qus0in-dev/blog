@@ -47,7 +47,7 @@ if (post && !post.data.draft) {
     },
     mainEntityOfPage: `${SITE_URL}/${post.id}/`,
     url: `${SITE_URL}/${post.id}/`,
-    image: `${SITE_URL}/og/${post.id}.svg`,
+    image: `${SITE_URL}/og/${post.id}.png`,
     keywords: post.data.tags,
     inLanguage: "ko-KR",
     isPartOf: {
@@ -64,7 +64,7 @@ if (post && !post.data.draft) {
     <BaseLayout
       title={`${post.data.title} | ${SITE_NAME}`}
       description={post.data.description}
-      ogImage={`/og/${post.id}.svg`}
+      ogImage={`/og/${post.id}.png`}
       ogType="article"
       publishedTime={post.data.pubDate.toISOString()}
       modifiedTime={(post.data.updatedDate ?? post.data.pubDate).toISOString()}
