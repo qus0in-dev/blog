@@ -1,12 +1,14 @@
 // @ts-check
-import { defineConfig } from 'astro/config';
+import { defineConfig } from "astro/config";
+import sitemap from "@astrojs/sitemap";
 
-import mdx from '@astrojs/mdx';
+import mdx from "@astrojs/mdx";
 
-import cloudflare from '@astrojs/cloudflare';
+import cloudflare from "@astrojs/cloudflare";
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [mdx()],
-  adapter: cloudflare()
+  site: "https://blog.qus0in.dev/",
+  integrations: [mdx(), sitemap()],
+  adapter: cloudflare(),
 });
