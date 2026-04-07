@@ -55,8 +55,10 @@ If a scope is not useful, omit it:
 
 - Use the current staged and unstaged scope to judge change severity.
 - Skip version updates for docs-only, style-only, or internal maintenance work unless the user explicitly asked for a release bump.
-- Apply a patch bump for small fixes and low-risk maintenance that changes runtime behavior.
-- Apply a minor bump for visible features, meaningful UX changes, new pages, new automation that affects shipped output, or bundled asset additions that change the product surface.
+- Default to no version bump unless the repository clearly uses package versioning for this kind of change.
+- Prefer no version bump for small features, copy changes, tracking or analytics additions, low-risk UX tweaks, and maintenance that does not materially change the packaged surface.
+- Apply a patch bump for bug fixes, small runtime behavior changes, or modest user-visible improvements when the repository's version is expected to track shipped output.
+- Apply a minor bump only for clearly larger product changes such as new packages, major new sections or pages, broad feature additions, or other substantial shipped surface expansion.
 - Apply a major bump only when the change is clearly breaking for consumers or public integration points.
 - If a version bump is needed, update `package.json` before staging the final commit set.
 - If the repository is not using package versioning as part of its workflow, keep the version unchanged.

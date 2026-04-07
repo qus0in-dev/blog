@@ -38,6 +38,7 @@ const site = Astro.site ?? new URL(SITE_URL);
 const canonical = new URL(Astro.url.pathname, site);
 const ogImageUrl = new URL(ogImage, site);
 const robots = noindex ? "noindex, nofollow" : "index, follow";
+const googleAnalyticsId = import.meta.env.PUBLIC_GOOGLE_ANALYTICS_ID;
 const structuredDataJson = structuredData
   ? JSON.stringify(structuredData)
   : undefined;
@@ -78,6 +79,24 @@ const structuredDataJson = structuredData
     {modifiedTime && <meta property="article:modified_time" content={modifiedTime} />}
     {structuredDataJson && (
       <script type="application/ld+json" set:html={structuredDataJson} />
+    )}
+    {googleAnalyticsId && (
+      <>
+        <script
+          async
+          src={`https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsId}`}
+        ></script>
+        <script
+          is:inline
+          define:vars={{ googleAnalyticsId }}
+        >{
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', googleAnalyticsId);
+        }</script>
+      </>
     )}
   </head>
   <body>

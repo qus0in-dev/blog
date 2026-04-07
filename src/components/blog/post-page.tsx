@@ -1,10 +1,11 @@
-import { ArrowLeft, ArrowRight, CornerDownLeft } from "lucide-react";
+import { ArrowLeft, ArrowRight, Copy, CornerDownLeft } from "lucide-react";
 
 import { getPostPublicSlug, type BlogPost } from "@/lib/blog";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { UI_LABELS } from "@/consts/ui";
+import { SITE_URL } from "@/consts/site";
 
 type Heading = {
   depth: number;
@@ -65,6 +66,70 @@ function ContentsCard({ headings }: { headings: Heading[] }) {
   );
 }
 
+function CopyLinkInline({ href }: { href: string }) {
+  return (
+    <section>
+      <div className="flex max-w-full items-center gap-3">
+        <button
+          type="button"
+          data-copy-url={href}
+          data-copy-kind="inline"
+          className="min-w-0 truncate font-body text-sm text-muted-foreground underline decoration-border underline-offset-4 transition-colors hover:text-foreground sm:text-[0.95rem]"
+        >
+          {href}
+        </button>
+        <span
+          data-copy-inline-status
+          className="pointer-events-none shrink-0 text-xs text-muted-foreground opacity-0 transition-opacity duration-200"
+        >
+          복사됨
+        </span>
+      </div>
+    </section>
+  );
+}
+
+function ShareActions({ href, title }: { href: string; title: string }) {
+  const shareUrl = `https://x.com/intent/tweet?url=${encodeURIComponent(href)}&text=${encodeURIComponent(title)}`;
+
+  return (
+    <section>
+      <div className="flex items-center justify-start gap-3">
+        <button
+          type="button"
+          aria-label="링크 복사"
+          title="링크 복사"
+          data-copy-url={href}
+          data-copy-label-default="링크"
+          data-copy-label-success="복사됨"
+          className="inline-flex h-11 items-center gap-2 rounded-full border bg-card/80 px-4 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+        >
+          <Copy className="size-4" />
+          <span data-copy-label>링크</span>
+        </button>
+        <a
+          href={shareUrl}
+          target="_blank"
+          rel="noreferrer"
+          aria-label="X에 공유"
+          title="X에 공유"
+          className="inline-flex size-11 items-center justify-center rounded-full border bg-card/80 text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+        >
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 24 24"
+            className="size-4 fill-current"
+          >
+            <path
+              d="M18.901 1.153h3.68l-8.04 9.19L24 22.847h-7.406l-5.8-7.584-6.639 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932zM17.61 20.645h2.039L6.486 3.24H4.298z"
+            ></path>
+          </svg>
+        </a>
+      </div>
+    </section>
+  );
+}
+
 export function PostPage({
   post,
   headings,
@@ -73,6 +138,9 @@ export function PostPage({
   relatedPosts = [],
   children,
 }: Props) {
+  const postHref = `${SITE_URL}/${getPostPublicSlug(post)}/`;
+  const shareTitle = post.data.title;
+
   return (
     <main className="mx-auto flex min-h-screen w-full max-w-7xl flex-col px-4 pb-14 sm:px-6 lg:px-8">
       <section className="border-x border-b bg-card/70 px-5 py-5 sm:px-8 lg:px-10">
@@ -104,6 +172,7 @@ export function PostPage({
                 </a>
               ))}
             </div>
+            <CopyLinkInline href={postHref} />
           </header>
 
           <Separator className="my-8" />
@@ -161,6 +230,10 @@ export function PostPage({
             </>
           ) : null}
 
+          <ShareActions href={postHref} title={shareTitle} />
+
+          <Separator className="my-8" />
+
           <nav className="grid gap-3 sm:grid-cols-2">
             {newerPost ? (
               <a
@@ -193,6 +266,66 @@ export function PostPage({
               </a>
             ) : null}
           </nav>
+
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `
+                (() => {
+                  const buttons = document.querySelectorAll("[data-copy-url]");
+
+                  for (const button of buttons) {
+                    button.addEventListener("click", async () => {
+                      const url = button.getAttribute("data-copy-url");
+                      const kind = button.getAttribute("data-copy-kind");
+                      const label = button.querySelector("[data-copy-label]");
+                      const inlineStatus = button.parentElement?.querySelector("[data-copy-inline-status]");
+                      const defaultLabel = button.getAttribute("data-copy-label-default") || "주소 복사";
+                      const successLabel = button.getAttribute("data-copy-label-success") || "복사됨";
+
+                      if (!url) return;
+
+                      try {
+                        await navigator.clipboard.writeText(url);
+
+                        if (kind === "inline" && inlineStatus) {
+                          inlineStatus.textContent = successLabel;
+                          inlineStatus.classList.remove("opacity-0");
+                          window.setTimeout(() => {
+                            inlineStatus.classList.add("opacity-0");
+                          }, 1800);
+                          return;
+                        }
+
+                        if (!label) return;
+
+                        label.textContent = successLabel;
+                        window.setTimeout(() => {
+                          label.textContent = defaultLabel;
+                        }, 1800);
+                      } catch {
+                        if (kind === "inline" && inlineStatus) {
+                          inlineStatus.textContent = "복사 실패";
+                          inlineStatus.classList.remove("opacity-0");
+                          window.setTimeout(() => {
+                            inlineStatus.classList.add("opacity-0");
+                            inlineStatus.textContent = "복사됨";
+                          }, 1800);
+                          return;
+                        }
+
+                        if (!label) return;
+
+                        label.textContent = "복사 실패";
+                        window.setTimeout(() => {
+                          label.textContent = defaultLabel;
+                        }, 1800);
+                      }
+                    });
+                  }
+                })();
+              `,
+            }}
+          />
         </article>
 
         <aside className="hidden space-y-4 lg:block">
