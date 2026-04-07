@@ -2,8 +2,20 @@ import { getCollection, type CollectionEntry } from "astro:content";
 
 export type BlogPost = CollectionEntry<"blog">;
 
+function toShortHash(value: string) {
+  let hash = 0x811c9dc5;
+
+  for (let index = 0; index < value.length; index += 1) {
+    hash ^= value.charCodeAt(index);
+    hash = Math.imul(hash, 0x01000193);
+  }
+
+  return (hash >>> 0).toString(16).padStart(8, "0");
+}
+
 export function getPostPublicSlug(post: BlogPost) {
-  return post.data.slug ?? post.id.split("/").filter(Boolean).at(-1) ?? post.id;
+  const fileName = post.id.split("/").filter(Boolean).at(-1) ?? post.id;
+  return toShortHash(fileName);
 }
 
 export async function getPublishedPosts() {

@@ -58,6 +58,17 @@ function truncate(value, limit) {
   return value.length > limit ? `${value.slice(0, limit - 1)}…` : value;
 }
 
+function toShortHash(value) {
+  let hash = 0x811c9dc5;
+
+  for (let index = 0; index < value.length; index += 1) {
+    hash ^= value.charCodeAt(index);
+    hash = Math.imul(hash, 0x01000193);
+  }
+
+  return (hash >>> 0).toString(16).padStart(8, "0");
+}
+
 function wrapText(value, maxCharsPerLine, maxLines) {
   const words = value.split(/\s+/).filter(Boolean);
   const lines = [];
@@ -162,7 +173,6 @@ function parseFrontmatter(source) {
 
   const frontmatter = match[1];
   const title = frontmatter.match(/^title:\s*(.+)$/m)?.[1]?.trim();
-  const slug = frontmatter.match(/^slug:\s*(.+)$/m)?.[1]?.trim();
   const description = frontmatter.match(/^description:\s*(.+)$/m)?.[1]?.trim();
   const pubDate = frontmatter.match(/^pubDate:\s*(.+)$/m)?.[1]?.trim();
   const draftValue = frontmatter.match(/^draft:\s*(.+)$/m)?.[1]?.trim();
@@ -171,7 +181,6 @@ function parseFrontmatter(source) {
 
   return {
     title,
-    slug,
     description,
     pubDate,
     draft: draftValue === "true",
@@ -215,13 +224,13 @@ await writeFile(path.join(outputDir, "site.png"), sitePng);
 const entries = await walkMarkdownFiles(blogDir);
 
 for (const fullPath of entries) {
-  const ext = path.extname(fullPath);
   const source = await readFile(fullPath, "utf8");
   const parsed = parseFrontmatter(source);
 
   if (!parsed || parsed.draft) continue;
 
-  const slug = parsed.slug ?? path.basename(fullPath, ext);
+  const fileName = path.basename(fullPath, path.extname(fullPath));
+  const slug = toShortHash(fileName);
   const png = renderOgPng({
     title: parsed.title,
     description: parsed.description,
