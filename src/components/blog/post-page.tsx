@@ -40,14 +40,20 @@ function ContentsCard({ headings }: { headings: Heading[] }) {
         <div className="text-xs font-medium uppercase tracking-[0.18em] text-muted-foreground">
           {UI_LABELS.contents}
         </div>
-        <ul className="space-y-2">
+        <ul className="space-y-2.5 font-ui">
           {headings
             .filter((heading) => heading.depth <= 3)
             .map((heading) => (
               <li key={heading.slug}>
                 <a
                   href={`#${heading.slug}`}
-                  className="text-sm text-muted-foreground hover:text-foreground"
+                  className={
+                    heading.depth === 1
+                      ? "block text-[1.05rem] leading-6 font-semibold tracking-[-0.04em] text-foreground hover:text-muted-foreground"
+                      : heading.depth === 2
+                        ? "block pl-3 text-[0.95rem] leading-6 font-medium tracking-[-0.02em] text-foreground/90 hover:text-foreground"
+                        : "block pl-8 text-[0.84rem] leading-5 tracking-[-0.01em] text-muted-foreground hover:text-foreground"
+                  }
                 >
                   {heading.text}
                 </a>
@@ -102,7 +108,7 @@ export function PostPage({
 
           <Separator className="my-8" />
 
-          <div className="prose prose-neutral max-w-none prose-headings:scroll-mt-24 prose-headings:font-semibold prose-headings:tracking-[-0.03em] prose-a:text-foreground prose-a:no-underline hover:prose-a:text-muted-foreground prose-code:rounded prose-code:bg-secondary prose-code:px-1 prose-code:py-0.5 prose-code:text-[0.9em] prose-pre:rounded-3xl prose-pre:border prose-pre:border-border prose-pre:bg-[#161616] prose-pre:px-5 prose-pre:py-4 prose-blockquote:border-l-2 prose-blockquote:border-border prose-blockquote:pl-4 prose-blockquote:text-muted-foreground prose-hr:border-border">
+          <div className="post-content prose prose-neutral max-w-none prose-headings:scroll-mt-24 prose-headings:font-semibold prose-headings:tracking-[-0.03em] prose-a:text-foreground prose-a:no-underline hover:prose-a:text-muted-foreground prose-pre:rounded-3xl prose-pre:border prose-pre:border-border prose-pre:bg-[#161616] prose-pre:px-5 prose-pre:py-4 prose-blockquote:border-l-2 prose-blockquote:border-border prose-blockquote:pl-4 prose-blockquote:text-muted-foreground prose-hr:border-border">
             {children}
           </div>
 
