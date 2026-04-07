@@ -17,7 +17,7 @@ export default defineConfig({
       enableLog: false,
       mermaidConfig: {
         theme: "base",
-        fontFamily: "Noto Sans KR, Pretendard, sans-serif",
+        fontFamily: "Pretendard, sans-serif",
         fontSize: 18,
         flowchart: {
           curve: "linear",

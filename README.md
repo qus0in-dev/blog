@@ -89,7 +89,7 @@ flowchart TB
 
 Mermaid는 [astro.config.mjs](./astro.config.mjs)에서 전역 설정을 사용합니다.
 
-- 폰트: `Noto Sans KR, Pretendard, sans-serif`
+- 폰트: `Pretendard, sans-serif`
 - 기본 테마: `base`
 - 저채도 색상 팔레트
 - 넉넉한 node/rank spacing

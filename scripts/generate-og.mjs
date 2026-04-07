@@ -12,9 +12,8 @@ const wasmPath = path.join(
   rootDir,
   "node_modules/@resvg/resvg-wasm/index_bg.wasm"
 );
-const titleFontPath = path.join(rootDir, "public/fonts/Paperlogy-7Bold.ttf");
-const bodyFontPath = path.join(rootDir, "public/fonts/Pretendard-Regular.otf");
-const uiFontPath = path.join(rootDir, "public/fonts/NotoSansKR-Regular.otf");
+const titleFontPath = path.join(rootDir, "public/fonts/Paperlogy-7Bold.woff2");
+const bodyFontPath = path.join(rootDir, "public/fonts/Pretendard-Regular.woff2");
 
 const SITE_TITLE = "일년보다 긴 하루";
 const SITE_DESCRIPTION = "자랑할 내용들은 없지만 찾아왔다면 환영해요";
@@ -23,7 +22,7 @@ const SITE_AUTHOR = "qus0in";
 const SITE_URL = "https://blog.qus0in.dev";
 const TITLE_FONT = "Paperlogy";
 const BODY_FONT = "Pretendard";
-const UI_FONT = "Noto Sans KR";
+const UI_FONT = "Pretendard";
 
 async function walkMarkdownFiles(dir) {
   const entries = await readdir(dir, { withFileTypes: true });
@@ -205,7 +204,6 @@ await initWasm(readFile(wasmPath));
 globalThis.__OG_FONT_BUFFERS__ = [
   new Uint8Array(await readFile(titleFontPath)),
   new Uint8Array(await readFile(bodyFontPath)),
-  new Uint8Array(await readFile(uiFontPath)),
 ];
 
 await rm(outputDir, { recursive: true, force: true });
