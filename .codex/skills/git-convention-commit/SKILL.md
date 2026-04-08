@@ -34,13 +34,15 @@ If a scope is not useful, omit it:
 ## Workflow
 
 1. Inspect both staged and unstaged changes before writing the message.
-2. If the user asked to commit the current work, stage the intended files with `git add` first. Prefer `git add -A` when the user clearly wants the whole current change set committed.
-3. Choose the best category using `references/categories.md`.
-4. Add a scope only when it improves scanability.
-5. Write a concise Korean subject that explains the main change.
-6. Assess the current change size and user-visible impact, then decide whether `package.json` `version` should be updated before the commit.
-7. Before finalizing, verify that English appears only in the category and optional scope.
-8. If the user asked for an actual commit, run `git commit -m "<message>"` after confirming there is something staged.
+2. If the change set contains distinct concerns, split them into separate commits before staging.
+3. Keep feature work, content edits, and docs or skill maintenance in different commits whenever the files can be separated cleanly.
+4. If the user asked to commit the current work, stage the intended files with `git add` first. Prefer `git add -A` only when the whole current change set belongs to one commit.
+5. Choose the best category using `references/categories.md`.
+6. Add a scope only when it improves scanability.
+7. Write a concise Korean subject that explains the main change.
+8. Assess the current change size and user-visible impact, then decide whether `package.json` `version` should be updated before the commit.
+9. Before finalizing, verify that English appears only in the category and optional scope.
+10. If the user asked for an actual commit, run `git commit -m "<message>"` after confirming there is something staged.
 
 ## Execution rules
 
@@ -49,6 +51,7 @@ If a scope is not useful, omit it:
 - Avoid interactive git flows.
 - If unrelated changes are present and the user did not ask to include them, stage only the relevant files.
 - If the user asked to commit the current state without narrowing scope, treat tracked modifications, deletions, and newly added files as in scope.
+- When commit boundaries are ambiguous, group by shipped behavior first, then by code structure, and keep generated files with the source change that caused them.
 - When `package.json` exists, inspect the current change set and decide whether a version bump is warranted before committing.
 
 ## Version rule

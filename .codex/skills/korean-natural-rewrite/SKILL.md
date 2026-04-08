@@ -34,7 +34,7 @@ Rewrite Korean prose so it reads like a competent human writer, not a translated
 
 ## Editorial Rules
 
-- If frontmatter is incomplete, finish `description` and keep `tags` in English only, within five items unless the user says otherwise.
+- If frontmatter is incomplete, finish `description`. Keep `tags` in English only, and if tag strategy matters for `src/content`, follow `$blog-tag-strategy`.
 - Keep frontmatter metadata plain text only. Do not put Markdown syntax such as `**bold**`, inline code, links, or heading markers inside `title`, `description`, or other metadata fields.
 - Keep inline code, examples, and facts intact while improving surrounding prose.
 - Avoid quotation-mark-heavy emphasis when a sentence can stand on its own.
