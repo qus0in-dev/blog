@@ -1,12 +1,12 @@
 export const SITE_KEYWORDS = [
+  "request-flow",
+  "web-architecture",
   "analytics",
   "cloudflare",
+  "front-controller",
   "google-analytics",
   "java",
   "observability",
-  "rest",
-  "servlet",
-  "spring",
-  "web-architecture",
-  "workers"
+  "request-routing",
+  "rest"
 ];
