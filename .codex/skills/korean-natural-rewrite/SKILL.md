@@ -30,10 +30,12 @@ Rewrite Korean prose so it reads like a competent human writer, not a translated
 - Prefer noun phrases over declarative `~다` headings.
 - Avoid vague headings like `정리`, `핵심`, `의미`, `변화`, `이유` when a more specific noun phrase is available.
 - Keep heading hierarchy clear with `#`, `##`, `###`, and ensure each lower heading narrows the scope of the parent.
+- Do not mix heading markers with other Markdown emphasis. Headings such as `#`, `##`, `###` must use plain text only, without `**bold**`, inline code, links, or other Markdown syntax inside the heading line.
 
 ## Editorial Rules
 
 - If frontmatter is incomplete, finish `description` and keep `tags` in English only, within five items unless the user says otherwise.
+- Keep frontmatter metadata plain text only. Do not put Markdown syntax such as `**bold**`, inline code, links, or heading markers inside `title`, `description`, or other metadata fields.
 - Keep inline code, examples, and facts intact while improving surrounding prose.
 - Avoid quotation-mark-heavy emphasis when a sentence can stand on its own.
 - Prefer direct Korean explanation over dramatic setup.
@@ -53,6 +55,7 @@ Rewrite Korean prose so it reads like a competent human writer, not a translated
 4. Preserve examples, code, and factual claims.
 5. If Mermaid would help, replace only the sections that benefit from diagrammatic explanation.
 6. After rewriting, do one final pass for repeated endings like `-이다`, `-것이다`, `-수 있다`.
+7. Do a Markdown structure pass: frontmatter fields must stay plain text, and headings must not mix `#` markers with bold, code, links, or other inline Markdown.
 
 ## Output Standard
 
