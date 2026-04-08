@@ -1,0 +1,4 @@
+interface:
+  display_name: "README Sync"
+  short_description: "현재 저장소 동작에 맞춰 README 내용을 정확히 갱신하기"
+  default_prompt: "Use $readme-sync to update README.md so it matches the current scripts, content structure, URL rules, and deployment behavior of this repository."
