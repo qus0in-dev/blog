@@ -12,6 +12,7 @@ import {
   getPublishedPosts,
   getRelatedPosts,
 } from "../lib/blog";
+import { getPostViewCounts } from "../lib/views";
 
 const slug = Astro.params.slug;
 const post = slug ? await getPublishedPostBySlug(slug) : undefined;
@@ -26,6 +27,7 @@ let newerPost;
 let olderPost;
 let relatedPosts = [];
 let structuredData;
+let postSlug = "";
 
 if (post) {
   const rendered = await render(post);
@@ -36,7 +38,11 @@ if (post) {
   const adjacentPosts = getAdjacentPosts(posts, post.id);
   newerPost = adjacentPosts.newerPost;
   olderPost = adjacentPosts.olderPost;
-  relatedPosts = getRelatedPosts(posts, post);
+  postSlug = getPostPublicSlug(post);
+  const postSlugs = posts.map((item) => getPostPublicSlug(item));
+  const viewCountsBySlug = await getPostViewCounts(postSlugs);
+  const viewCountsByPostId = new Map(posts.map((item) => [item.id, viewCountsBySlug.get(getPostPublicSlug(item)) ?? 0]));
+  relatedPosts = getRelatedPosts(posts, post, viewCountsByPostId);
 
   structuredData = {
     "@context": "https://schema.org",
@@ -53,9 +59,9 @@ if (post) {
       "@type": "Person",
       name: SITE_AUTHOR,
     },
-    mainEntityOfPage: `${SITE_URL}/${getPostPublicSlug(post)}/`,
-    url: `${SITE_URL}/${getPostPublicSlug(post)}/`,
-    image: `${SITE_URL}/og/${getPostPublicSlug(post)}.png`,
+    mainEntityOfPage: `${SITE_URL}/${postSlug}/`,
+    url: `${SITE_URL}/${postSlug}/`,
+    image: `${SITE_URL}/og/${postSlug}.png`,
     keywords: post.data.tags,
     inLanguage: "ko-KR",
     isPartOf: {
@@ -72,7 +78,7 @@ if (post) {
     <BaseLayout
       title={`${post.data.title} | ${SITE_NAME}`}
       description={post.data.description}
-      ogImage={`/og/${getPostPublicSlug(post)}.png`}
+      ogImage={`/og/${postSlug}.png`}
       ogType="article"
       publishedTime={post.data.pubDate.toISOString()}
       modifiedTime={(post.data.updatedDate ?? post.data.pubDate).toISOString()}
@@ -81,6 +87,7 @@ if (post) {
     >
       <PostPage
         post={post}
+        postSlug={postSlug}
         headings={headings}
         newerPost={newerPost}
         olderPost={olderPost}

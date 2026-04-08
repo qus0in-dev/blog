@@ -9,6 +9,13 @@
 		"directory": "./dist",
 		"binding": "ASSETS"
 	},
+	"d1_databases": [
+		{
+			"binding": "BLOG_VIEWS_DB",
+			"database_name": "qus0in-dev-blog-views",
+			"database_id": "c4bfbb83-bfb8-44aa-a2fd-5b6b45847133"
+		}
+	],
 	"observability": {
 		"enabled": true
 	}

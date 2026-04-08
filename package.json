@@ -6,14 +6,17 @@
     "node": ">=22.12.0"
   },
   "scripts": {
-    "astro": "astro",
-    "preview": "astro preview",
     "dev": "astro dev",
-    "generate:og": "node scripts/generate-og.mjs",
+    "preview": "astro preview",
+    "astro": "astro",
     "generate:site-keywords": "node scripts/generate-site-keywords.mjs",
+    "generate:og": "node scripts/generate-og.mjs",
     "build": "pnpm run generate:site-keywords && pnpm run generate:og && astro build",
-    "generate-types": "wrangler types",
     "blog:publish": "node scripts/publish-drafts.mjs",
+    "migration:local": "wrangler d1 migrations apply qus0in-dev-blog-views --local",
+    "migration:remote": "wrangler d1 migrations apply qus0in-dev-blog-views --remote",
+    "migration:all": "pnpm migration:local && pnpm migration:remote",
+    "generate-types": "wrangler types",
     "blog:deploy": "pnpm build && wrangler deploy"
   },
   "dependencies": {
