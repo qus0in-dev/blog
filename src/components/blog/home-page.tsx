@@ -1,8 +1,7 @@
-import { ArrowUpRight } from "lucide-react";
-
 import { getPostPublicSlug, type BlogPost } from "@/lib/blog";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import { Separator } from "@/components/ui/separator";
 import { HOME_HERO_DESCRIPTION, HOME_HERO_TITLE } from "@/consts/site";
 import { UI_LABELS } from "@/consts/ui";
@@ -18,6 +17,24 @@ type Props = {
   totalPages: number;
   filteredCount: number;
 };
+
+function ArrowUpRightIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <path d="M7 17 17 7" />
+      <path d="M7 7h10v10" />
+    </svg>
+  );
+}
 
 function formatShortDate(date: Date) {
   return new Intl.DateTimeFormat("en-US", {
@@ -158,7 +175,7 @@ export function HomePage({
                         {post.data.description}
                       </p>
                     </div>
-                    <ArrowUpRight className="mt-1 hidden size-4 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 sm:block" />
+                    <ArrowUpRightIcon className="mt-1 hidden size-4 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 sm:block" />
                   </a>
                   <div className="flex flex-wrap gap-2">
                     {post.data.tags.map((tag) => (
@@ -189,22 +206,24 @@ export function HomePage({
           </div>
           <div className="flex items-center gap-2">
             {currentPage > 1 ? (
-              <Button asChild variant="outline" size="sm">
-                <a href={buildArchiveHref(currentPage - 1, activeTag, searchQuery)}>
-                  {UI_LABELS.previous}
-                </a>
-              </Button>
+              <a
+                href={buildArchiveHref(currentPage - 1, activeTag, searchQuery)}
+                className={cn(buttonVariants({ variant: "outline", size: "sm" }))}
+              >
+                {UI_LABELS.previous}
+              </a>
             ) : (
               <Button variant="outline" size="sm" disabled>
                 {UI_LABELS.previous}
               </Button>
             )}
             {currentPage < totalPages ? (
-              <Button asChild variant="outline" size="sm">
-                <a href={buildArchiveHref(currentPage + 1, activeTag, searchQuery)}>
-                  {UI_LABELS.next}
-                </a>
-              </Button>
+              <a
+                href={buildArchiveHref(currentPage + 1, activeTag, searchQuery)}
+                className={cn(buttonVariants({ variant: "outline", size: "sm" }))}
+              >
+                {UI_LABELS.next}
+              </a>
             ) : (
               <Button variant="outline" size="sm" disabled>
                 {UI_LABELS.next}

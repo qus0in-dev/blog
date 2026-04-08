@@ -1,18 +1,16 @@
 ---
 title: 기술 블로그 운영은 내가 할께, 방문자 통계는 누가 할래?
 description: 플랫폼에서 벗어난 기술 블로그가 유입을 추적하는 법 (Google Analytics / Cloudflare Web Analytics / Cloudflare Worker Observability)
-pubDate: 2026-04-08
+pubDate: 2026-04-08T10:26:10+09:00
 tags:
   - analytics
   - google-analytics
   - cloudflare
   - observability
   - workers
-
-draft: false
 ---
 
-# Google Analytics, Cloudflare Web Analytics, Workers 관측은 서로 무엇이 다를까
+# 네\*버와 티\*토리를 벗어난 순간, 방문자는 '익명'이 된다
 
 직접 기술 블로그를 운영하기 시작해 보니, 플랫폼 블로그에서는 당연하게 주어지던 **방문자 통계**를 이제는 내가 직접 골라 붙여야 했다. 그런데 막상 붙이고 보니 문제는 "무슨 도구를 쓸까"보다 "내가 지금 무엇을 보려는가"에 더 가까웠다.
 
@@ -34,7 +32,7 @@ draft: false
 
 > **Web Analytics** 와 **Observability** 는 비슷해 보여도 같은 범주가 아니다.
 
-## 세 가지 관점
+## 방문자(트래픽)를 보는 세 가지 관점
 
 같은 트래픽을 보더라도, 블로그 운영에서 던지는 질문은 층위마다 달라진다.
 
@@ -53,7 +51,7 @@ flowchart TB
     C --> F["요청을 어떻게 처리했나<br/>내 코드 안에서 무슨 일이 있었나"]
 ```
 
-## 1. Google Analytics: 사용자 행동 분석
+### Google Analytics: 사용자 행동 분석
 
 **Google Analytics**는 브라우저 안에서 실행되는 스크립트로 데이터를 모은다.
 
@@ -72,7 +70,7 @@ flowchart TB
 
 콘텐츠 성과나 유입 분석에는 여전히 가장 직접적이다. 특히 `utm_source`, `utm_medium`, `utm_campaign` 같은 값을 함께 보면 어떤 채널에서 어떤 글이 읽혔는지 해석하기 쉽다. 블로그 운영자 입장에서는 "방문자"를 보는 도구에 가장 가깝다. 반면 광고 차단기나 추적 방지 기능 영향을 많이 받고, 비정상 요청이나 서버 단 이상 징후는 거의 보여주지 못한다.
 
-## 2. Cloudflare Web Analytics: 엣지 레벨 웹 분석
+### Cloudflare Web Analytics: 엣지 레벨 웹 분석
 
 **Cloudflare Web Analytics**는 사용자 요청이 **Cloudflare** 엣지를 통과하는 흐름을 기준으로 본다.
 
@@ -91,7 +89,7 @@ flowchart TB
 
 다만 여기서 선을 그어야 한다. **Cloudflare Web Analytics**는 어디까지나 **웹 분석**이다. 엣지에서 본 요청과 전달 흐름은 보여주지만, 내 애플리케이션 코드 내부에서 어떤 분기와 처리가 일어났는지까지 설명해 주지는 않는다. 즉, 이 도구는 "네트워크를 통과한 요청"을 보는 쪽에 가깝다.
 
-## 3. Cloudflare Workers 기반 관측: 운영과 처리 흐름
+### Cloudflare Workers 기반 관측: 운영과 처리 흐름
 
 내가 `.env` 경로 탐색 시도를 보고 혼동했던 부분이 바로 여기다. 그 신호는 "**페이지가 얼마나 읽혔는가**"가 아니라 "**들어온 요청을 내 코드가 어떻게 처리했는가**"에 가까웠다. 이 지점부터는 이미 방문자 통계보다는 백엔드 운영 관점으로 넘어간다.
 
@@ -115,7 +113,7 @@ flowchart TB
 
 즉, **Workers 기반 관측**은 **Cloudflare Web Analytics**의 상위 버전이라기보다, 아예 다른 층위의 도구라고 보는 편이 맞다.
 
-## 한눈에 비교
+### 솔루션별 특징 한눈에 비교
 
 | 관점         | Google Analytics          | Cloudflare Web Analytics               | Cloudflare Workers 기반 관측     |
 | ------------ | ------------------------- | -------------------------------------- | -------------------------------- |

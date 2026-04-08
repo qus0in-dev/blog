@@ -1,19 +1,18 @@
-export const SITE_TITLE = "일년보다 긴 하루";
-export const SITE_DESCRIPTION = "자랑할 내용들은 없지만 찾아왔다면 환영해요";
-export const SITE_URL = "https://blog.qus0in.dev";
-export const SITE_NAME = SITE_TITLE;
+import {
+  SITE_AUTHOR,
+  SITE_DESCRIPTION,
+  SITE_NAME,
+  SITE_TITLE,
+  SITE_URL,
+} from "./site.shared.js";
+import { SITE_KEYWORDS as GENERATED_SITE_KEYWORDS } from "./site-keywords.generated.js";
+
+export { SITE_AUTHOR, SITE_DESCRIPTION, SITE_NAME, SITE_TITLE, SITE_URL };
+
 export const SITE_LOCALE = "ko_KR";
-export const SITE_AUTHOR = "qus0in";
 export const SITE_X_URL = "https://x.com/qus0in";
 export const SITE_GITHUB_URL = "https://github.com/qus0in";
-export const SITE_KEYWORDS = [
-  "기술 블로그",
-  "개발 노트",
-  "Astro",
-  "Cloudflare",
-  "프론트엔드",
-  "백엔드",
-] as const;
+export const SITE_KEYWORDS = GENERATED_SITE_KEYWORDS;
 
 export const HOME_HERO_TITLE = SITE_TITLE;
 export const HOME_HERO_DESCRIPTION = SITE_DESCRIPTION;

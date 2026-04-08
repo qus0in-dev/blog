@@ -19,7 +19,7 @@ export function getPostPublicSlug(post: BlogPost) {
 }
 
 export async function getPublishedPosts() {
-  return (await getCollection("blog", ({ data }) => !data.draft)).sort(
+  return (await getCollection("blog")).sort(
     (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
   );
 }

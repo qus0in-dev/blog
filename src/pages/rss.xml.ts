@@ -4,7 +4,7 @@ import { SITE_DESCRIPTION, SITE_TITLE, SITE_URL } from "../consts/site";
 import { getPostPublicSlug } from "../lib/blog";
 
 export async function GET(context: any) {
-  const posts = await getCollection("blog", ({ data }) => !data.draft);
+  const posts = await getCollection("blog");
   const items = posts
     .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
     .map((post) => ({

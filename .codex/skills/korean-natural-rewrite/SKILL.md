@@ -40,6 +40,16 @@ Rewrite Korean prose so it reads like a competent human writer, not a translated
 - Avoid quotation-mark-heavy emphasis when a sentence can stand on its own.
 - Prefer direct Korean explanation over dramatic setup.
 
+## Blog Voice Heuristics
+
+- Open with a concrete developer memory, operational moment, or observed confusion before widening the scope.
+- Frame the article around a distinction of layers, responsibilities, or questions, then keep returning to that frame.
+- Use short glossary-style blockquotes for terms that a reader may know vaguely but not precisely.
+- Prefer comparison tables or short bullet triads when separating adjacent concepts such as tools, layers, or routing models.
+- End with a practical selection rule. The close should answer `언제 무엇을 쓰면 되나` rather than only restating the topic.
+- Allow one light colloquial hook in the title or opening, but keep the body precise and unsentimental.
+- When contrasting past and present stacks, explain what changed in architecture, not just what syntax disappeared.
+
 ## Mermaid Heuristics
 
 - Convert tables or parallel bullet lists into Mermaid only when a flow, comparison, or structure becomes clearer.
@@ -56,6 +66,7 @@ Rewrite Korean prose so it reads like a competent human writer, not a translated
 5. If Mermaid would help, replace only the sections that benefit from diagrammatic explanation.
 6. After rewriting, do one final pass for repeated endings like `-이다`, `-것이다`, `-수 있다`.
 7. Do a Markdown structure pass: frontmatter fields must stay plain text, and headings must not mix `#` markers with bold, code, links, or other inline Markdown.
+8. For technical blog posts, ensure the final draft contains one clear organizing lens such as `세 가지 관점`, `요청 흐름`, or `설계 전환`, and that each section supports that lens.
 
 ## Output Standard
 

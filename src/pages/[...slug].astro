@@ -16,7 +16,7 @@ import {
 const slug = Astro.params.slug;
 const post = slug ? await getPublishedPostBySlug(slug) : undefined;
 
-if (!post || post.data.draft) {
+if (!post) {
   Astro.response.status = 404;
 }
 
@@ -27,7 +27,7 @@ let olderPost;
 let relatedPosts = [];
 let structuredData;
 
-if (post && !post.data.draft) {
+if (post) {
   const rendered = await render(post);
   Content = rendered.Content;
   headings = rendered.headings;
