@@ -1,0 +1,4 @@
+interface:
+  display_name: "Mermaid Editorial Design"
+  short_description: "기술 글용 Mermaid 다이어그램을 더 읽기 좋게 다듬기"
+  default_prompt: "Use $mermaid-editorial-design to refine these Mermaid diagrams for a Korean technical blog with calmer styling, clearer spacing, and better mobile readability."

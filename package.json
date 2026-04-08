@@ -1,18 +1,23 @@
 {
   "name": "qus0in-dev-blog",
   "type": "module",
-  "version": "0.3.0",
+  "version": "0.3.2",
   "engines": {
     "node": ">=22.12.0"
   },
   "scripts": {
     "dev": "astro dev",
-    "generate:og": "node scripts/generate-og.mjs",
-    "build": "pnpm run generate:og && astro build",
     "preview": "astro preview",
     "astro": "astro",
+    "generate:site-keywords": "node scripts/generate-site-keywords.mjs",
+    "generate:og": "node scripts/generate-og.mjs",
+    "build": "pnpm run generate:site-keywords && pnpm run generate:og && astro build",
+    "blog:publish": "node scripts/publish-drafts.mjs",
+    "migration:local": "wrangler d1 migrations apply qus0in-dev-blog-views --local",
+    "migration:remote": "wrangler d1 migrations apply qus0in-dev-blog-views --remote",
+    "migration:all": "pnpm migration:local && pnpm migration:remote",
     "generate-types": "wrangler types",
-    "deploy": "pnpm build && wrangler deploy"
+    "blog:deploy": "pnpm build && wrangler deploy"
   },
   "dependencies": {
     "@astrojs/cloudflare": "^13.1.7",
@@ -30,7 +35,6 @@
     "astro-mermaid": "^2.0.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "lucide-react": "^1.7.0",
     "mermaid": "^11.14.0",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",

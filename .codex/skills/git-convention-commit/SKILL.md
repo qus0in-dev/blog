@@ -7,6 +7,8 @@ description: Use when drafting, validating, staging, and committing git changes 
 
 Use this skill when the user asks to create a commit, suggest commit messages, validate commit wording, stage changes, align a commit with the repository's git convention, or decide whether the project version should move with the current change set.
 
+When version handling matters, follow `$package-version-bump`.
+
 ## Output format
 
 Write the commit subject in this format:
@@ -34,13 +36,15 @@ If a scope is not useful, omit it:
 ## Workflow
 
 1. Inspect both staged and unstaged changes before writing the message.
-2. If the user asked to commit the current work, stage the intended files with `git add` first. Prefer `git add -A` when the user clearly wants the whole current change set committed.
-3. Choose the best category using `references/categories.md`.
-4. Add a scope only when it improves scanability.
-5. Write a concise Korean subject that explains the main change.
-6. Assess the current change size and user-visible impact, then decide whether `package.json` `version` should be updated before the commit.
-7. Before finalizing, verify that English appears only in the category and optional scope.
-8. If the user asked for an actual commit, run `git commit -m "<message>"` after confirming there is something staged.
+2. If the change set contains distinct concerns, split them into separate commits before staging.
+3. Keep feature work, content edits, and docs or skill maintenance in different commits whenever the files can be separated cleanly.
+4. If the user asked to commit the current work, stage the intended files with `git add` first. Prefer `git add -A` only when the whole current change set belongs to one commit.
+5. Choose the best category using `references/categories.md`.
+6. Add a scope only when it improves scanability.
+7. Write a concise Korean subject that explains the main change.
+8. Assess the current change size and user-visible impact, then decide whether `package.json` `version` should be updated before the commit by following `$package-version-bump`.
+9. Before finalizing, verify that English appears only in the category and optional scope.
+10. If the user asked for an actual commit, run `git commit -m "<message>"` after confirming there is something staged.
 
 ## Execution rules
 
@@ -49,19 +53,17 @@ If a scope is not useful, omit it:
 - Avoid interactive git flows.
 - If unrelated changes are present and the user did not ask to include them, stage only the relevant files.
 - If the user asked to commit the current state without narrowing scope, treat tracked modifications, deletions, and newly added files as in scope.
-- When `package.json` exists, inspect the current change set and decide whether a version bump is warranted before committing.
+- When commit boundaries are ambiguous, group by shipped behavior first, then by code structure, and keep generated files with the source change that caused them.
+- When `package.json` exists, inspect the current change set and decide whether a version bump is warranted before committing by following `$package-version-bump`.
 
 ## Version rule
 
 - Use the current staged and unstaged scope to judge change severity.
-- Skip version updates for docs-only, style-only, or internal maintenance work unless the user explicitly asked for a release bump.
-- Default to no version bump unless the repository clearly uses package versioning for this kind of change.
-- Prefer no version bump for small features, copy changes, tracking or analytics additions, low-risk UX tweaks, and maintenance that does not materially change the packaged surface.
-- Apply a patch bump for bug fixes, small runtime behavior changes, or modest user-visible improvements when the repository's version is expected to track shipped output.
+- Default to the repository rule in `$package-version-bump`: code changes should bump at least `patch`.
+- Skip version updates only for docs-only, content-only, README-only, or skill-only changes unless the user explicitly asks for a release bump.
 - Apply a minor bump only for clearly larger product changes such as new packages, major new sections or pages, broad feature additions, or other substantial shipped surface expansion.
 - Apply a major bump only when the change is clearly breaking for consumers or public integration points.
 - If a version bump is needed, update `package.json` before staging the final commit set.
-- If the repository is not using package versioning as part of its workflow, keep the version unchanged.
 
 ## Examples
 

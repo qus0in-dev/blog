@@ -1,0 +1,4 @@
+interface:
+  display_name: "Blog Tag Strategy"
+  short_description: "기술 글용 태그를 최대 10개까지 일관되게 설계하기"
+  default_prompt: "Use $blog-tag-strategy to assign or revise frontmatter tags for this src/content post so the tags stay accurate, remain in English, and overlap meaningfully with existing repository tags where appropriate."

@@ -1,6 +1,5 @@
 // @ts-check
 import { defineConfig } from "astro/config";
-import sitemap from "@astrojs/sitemap";
 import mdx from "@astrojs/mdx";
 import cloudflare from "@astrojs/cloudflare";
 import react from "@astrojs/react";
@@ -42,7 +41,6 @@ export default defineConfig({
       },
     }),
     mdx(),
-    sitemap(),
     react(),
   ],
   adapter: cloudflare(),

@@ -30,13 +30,25 @@ Rewrite Korean prose so it reads like a competent human writer, not a translated
 - Prefer noun phrases over declarative `~다` headings.
 - Avoid vague headings like `정리`, `핵심`, `의미`, `변화`, `이유` when a more specific noun phrase is available.
 - Keep heading hierarchy clear with `#`, `##`, `###`, and ensure each lower heading narrows the scope of the parent.
+- Do not mix heading markers with other Markdown emphasis. Headings such as `#`, `##`, `###` must use plain text only, without `**bold**`, inline code, links, or other Markdown syntax inside the heading line.
 
 ## Editorial Rules
 
-- If frontmatter is incomplete, finish `description` and keep `tags` in English only, within five items unless the user says otherwise.
+- If frontmatter is incomplete, finish `description`. Keep `tags` in English only, and if tag strategy matters for `src/content`, follow `$blog-tag-strategy`.
+- Keep frontmatter metadata plain text only. Do not put Markdown syntax such as `**bold**`, inline code, links, or heading markers inside `title`, `description`, or other metadata fields.
 - Keep inline code, examples, and facts intact while improving surrounding prose.
 - Avoid quotation-mark-heavy emphasis when a sentence can stand on its own.
 - Prefer direct Korean explanation over dramatic setup.
+
+## Blog Voice Heuristics
+
+- Open with a concrete developer memory, operational moment, or observed confusion before widening the scope.
+- Frame the article around a distinction of layers, responsibilities, or questions, then keep returning to that frame.
+- Use short glossary-style blockquotes for terms that a reader may know vaguely but not precisely.
+- Prefer comparison tables or short bullet triads when separating adjacent concepts such as tools, layers, or routing models.
+- End with a practical selection rule. The close should answer `언제 무엇을 쓰면 되나` rather than only restating the topic.
+- Allow one light colloquial hook in the title or opening, but keep the body precise and unsentimental.
+- When contrasting past and present stacks, explain what changed in architecture, not just what syntax disappeared.
 
 ## Mermaid Heuristics
 
@@ -53,6 +65,8 @@ Rewrite Korean prose so it reads like a competent human writer, not a translated
 4. Preserve examples, code, and factual claims.
 5. If Mermaid would help, replace only the sections that benefit from diagrammatic explanation.
 6. After rewriting, do one final pass for repeated endings like `-이다`, `-것이다`, `-수 있다`.
+7. Do a Markdown structure pass: frontmatter fields must stay plain text, and headings must not mix `#` markers with bold, code, links, or other inline Markdown.
+8. For technical blog posts, ensure the final draft contains one clear organizing lens such as `세 가지 관점`, `요청 흐름`, or `설계 전환`, and that each section supports that lens.
 
 ## Output Standard
 

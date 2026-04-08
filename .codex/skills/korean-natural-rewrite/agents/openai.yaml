@@ -1,0 +1,4 @@
+interface:
+  display_name: "Korean Natural Rewrite"
+  short_description: "한국어 기술 블로그 글을 자연스럽고 구조적으로 다듬기"
+  default_prompt: "Use $korean-natural-rewrite to rewrite this Korean technical blog draft so it reads naturally, keeps technical accuracy, and improves headings, metadata, and structure where needed."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Package Version Bump"
+  short_description: "코드 변경 시 package.json 버전을 최소 patch로 올리기"
+  default_prompt: "Use $package-version-bump to decide whether this change set needs a package.json version bump, and default to at least a patch bump for shipped code changes in this repository."

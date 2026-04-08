@@ -3,10 +3,16 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { Resvg, initWasm } from "@resvg/resvg-wasm";
+import {
+  SITE_DESCRIPTION,
+  SITE_NAME,
+  SITE_TITLE,
+  SITE_URL,
+} from "../src/consts/site.shared.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.resolve(__dirname, "..");
-const blogDir = path.join(rootDir, "src/content");
+const blogDir = path.join(rootDir, "src/content/published");
 const outputDir = path.join(rootDir, "public/og");
 const wasmPath = path.join(
   rootDir,
@@ -15,11 +21,6 @@ const wasmPath = path.join(
 const titleFontPath = path.join(rootDir, "public/fonts/Paperlogy-7Bold.woff2");
 const bodyFontPath = path.join(rootDir, "public/fonts/Pretendard-Regular.woff2");
 
-const SITE_TITLE = "일년보다 긴 하루";
-const SITE_DESCRIPTION = "자랑할 내용들은 없지만 찾아왔다면 환영해요";
-const SITE_NAME = SITE_TITLE;
-const SITE_AUTHOR = "qus0in";
-const SITE_URL = "https://blog.qus0in.dev";
 const TITLE_FONT = "Paperlogy";
 const BODY_FONT = "Pretendard";
 const UI_FONT = "Pretendard";
@@ -174,7 +175,6 @@ function parseFrontmatter(source) {
   const title = frontmatter.match(/^title:\s*(.+)$/m)?.[1]?.trim();
   const description = frontmatter.match(/^description:\s*(.+)$/m)?.[1]?.trim();
   const pubDate = frontmatter.match(/^pubDate:\s*(.+)$/m)?.[1]?.trim();
-  const draftValue = frontmatter.match(/^draft:\s*(.+)$/m)?.[1]?.trim();
 
   if (!title || !description) return null;
 
@@ -182,7 +182,6 @@ function parseFrontmatter(source) {
     title,
     description,
     pubDate,
-    draft: draftValue === "true",
   };
 }
 
@@ -225,7 +224,7 @@ for (const fullPath of entries) {
   const source = await readFile(fullPath, "utf8");
   const parsed = parseFrontmatter(source);
 
-  if (!parsed || parsed.draft) continue;
+  if (!parsed) continue;
 
   const fileName = path.basename(fullPath, path.extname(fullPath));
   const slug = toShortHash(fileName);
