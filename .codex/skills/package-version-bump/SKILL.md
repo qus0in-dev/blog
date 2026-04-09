@@ -43,10 +43,15 @@ Do not require a version bump for these alone:
 1. Inspect the intended commit scope.
 2. Decide whether the scope contains shipped code or only docs/content/skill changes.
 3. If shipped code changed, update `package.json` before staging the final commit.
-4. Use the smallest honest bump, with `patch` as the fallback.
-5. If multiple commits are being split, assess the version bump against the commit being prepared, not the whole worktree.
+4. Use `references/bump-examples.md` when the bump level is ambiguous.
+5. Use the smallest honest bump, with `patch` as the fallback.
+6. If multiple commits are being split, assess the version bump against the commit being prepared, not the whole worktree.
 
 ## Repository Preference
 
 - This repository treats code changes as shippable changes.
 - A commit that changes code but leaves `package.json` version unchanged should be treated as an exception that needs explicit user direction.
+
+## Reference
+
+- Read [references/bump-examples.md](references/bump-examples.md) when deciding between patch, minor, and no bump.

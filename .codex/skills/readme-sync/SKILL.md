@@ -40,6 +40,10 @@ Update `README.md` so it reflects the repository as it actually works now, not a
 - If the project includes local skills that affect maintenance, mention the relevant ones briefly.
 - Remove outdated sections instead of trying to hedge them.
 
+## Reference
+
+- Read [references/readme-outline.md](references/readme-outline.md) when choosing README section order or deciding what to leave out.
+
 ## Output Standard
 
 The resulting README should help a maintainer understand what the project is, how to run it, how content works, and what repository-specific rules they should not accidentally break.

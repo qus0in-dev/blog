@@ -42,10 +42,15 @@ Build the final set from these buckets when relevant:
 
 1. Read the article title, description, and frontmatter.
 2. Scan current tag vocabulary from `src/content/published`.
-3. Draft a candidate set grouped by topic, platform, and architectural layer.
-4. Remove weak or redundant tags.
-5. Ensure the final set has some meaningful overlap with existing posts when appropriate.
-6. Keep the final list at 10 or fewer tags.
+3. If the tag mix feels too broad or repetitive, read `references/tag-patterns.md`.
+4. Draft a candidate set grouped by topic, platform, and architectural layer.
+5. Remove weak or redundant tags.
+6. Ensure the final set has some meaningful overlap with existing posts when appropriate.
+7. Keep the final list at 10 or fewer tags.
+
+## Reference
+
+- Read [references/tag-patterns.md](references/tag-patterns.md) when tag balance or canonical wording is unclear.
 
 ## Output Standard
 
