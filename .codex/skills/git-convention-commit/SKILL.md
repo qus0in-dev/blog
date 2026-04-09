@@ -40,7 +40,7 @@ If a scope is not useful, omit it:
 3. Keep feature work, content edits, and docs or skill maintenance in different commits whenever the files can be separated cleanly.
 4. If the user asked to commit the current work, stage the intended files with `git add` first. Prefer `git add -A` only when the whole current change set belongs to one commit.
 5. Choose the best category using `references/categories.md`.
-6. Add a scope only when it improves scanability.
+6. Add a scope only when it improves scanability, using `references/scopes.md` when helpful.
 7. Write a concise Korean subject that explains the main change.
 8. Assess the current change size and user-visible impact, then decide whether `package.json` `version` should be updated before the commit by following `$package-version-bump`.
 9. Before finalizing, verify that English appears only in the category and optional scope.
@@ -88,3 +88,4 @@ feat: 푸터 링크와 커밋 스킬 추가
 ## Reference
 
 - Read [references/categories.md](references/categories.md) when category choice is ambiguous.
+- Read [references/scopes.md](references/scopes.md) when scope choice is ambiguous.

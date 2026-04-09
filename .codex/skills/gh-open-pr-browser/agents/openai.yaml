@@ -1,0 +1,4 @@
+interface:
+  display_name: "GH Open PR Browser"
+  short_description: "현재 브랜치를 gh로 PR 작성 화면까지 열고 제목만 미리 채우기"
+  default_prompt: "Use $gh-open-pr-browser to verify the current branch is ready, push it if needed, and open the GitHub pull request creation page with gh using only a prefilled title."

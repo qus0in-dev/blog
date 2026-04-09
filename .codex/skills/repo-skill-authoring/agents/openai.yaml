@@ -1,0 +1,4 @@
+interface:
+  display_name: "Repo Skill Authoring"
+  short_description: "이 저장소 규칙에 맞게 SKILL.md와 openai.yaml을 함께 작성하기"
+  default_prompt: "Use $repo-skill-authoring to create or update this local skill so it follows the repository convention of pairing SKILL.md with agents/openai.yaml."

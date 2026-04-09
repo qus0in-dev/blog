@@ -60,13 +60,18 @@ Rewrite Korean prose so it reads like a competent human writer, not a translated
 ## Workflow
 
 1. Scan for repeated filler phrases and translated sentence endings.
-2. Rewrite headings before polishing paragraphs, so the article structure becomes clear first.
-3. Rewrite paragraph by paragraph, not sentence by sentence in isolation.
-4. Preserve examples, code, and factual claims.
-5. If Mermaid would help, replace only the sections that benefit from diagrammatic explanation.
-6. After rewriting, do one final pass for repeated endings like `-이다`, `-것이다`, `-수 있다`.
-7. Do a Markdown structure pass: frontmatter fields must stay plain text, and headings must not mix `#` markers with bold, code, links, or other inline Markdown.
-8. For technical blog posts, ensure the final draft contains one clear organizing lens such as `세 가지 관점`, `요청 흐름`, or `설계 전환`, and that each section supports that lens.
+2. If the draft sounds translated or vague, read `references/style-patterns.md`.
+3. Rewrite headings before polishing paragraphs, so the article structure becomes clear first.
+4. Rewrite paragraph by paragraph, not sentence by sentence in isolation.
+5. Preserve examples, code, and factual claims.
+6. If Mermaid would help, replace only the sections that benefit from diagrammatic explanation.
+7. After rewriting, do one final pass for repeated endings like `-이다`, `-것이다`, `-수 있다`.
+8. Do a Markdown structure pass: frontmatter fields must stay plain text, and headings must not mix `#` markers with bold, code, links, or other inline Markdown.
+9. For technical blog posts, ensure the final draft contains one clear organizing lens such as `세 가지 관점`, `요청 흐름`, or `설계 전환`, and that each section supports that lens.
+
+## Reference
+
+- Read [references/style-patterns.md](references/style-patterns.md) when the rewrite still sounds translated or overly explained.
 
 ## Output Standard
 

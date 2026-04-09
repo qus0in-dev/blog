@@ -1,5 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { KakaoAd } from "@/components/ads/kakao-ad";
 import { HOME_HERO_DESCRIPTION, HOME_HERO_TITLE } from "@/consts/site";
 import { UI_LABELS } from "@/consts/ui";
 import type { BlogPost } from "@/lib/blog";
@@ -110,6 +111,8 @@ export function HomePage({
           activeTag={activeTag}
           searchQuery={searchQuery}
         />
+
+        <KakaoAd className="mt-8" label="Sponsor" />
 
         <ArchivePagination
           currentPage={currentPage}

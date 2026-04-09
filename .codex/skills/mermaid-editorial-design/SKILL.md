@@ -45,6 +45,10 @@ Design Mermaid diagrams so they read like part of a polished technical article, 
 - For comparisons: separate “before” and “after” diagrams instead of mirrored two-column layouts when space is tight.
 - For step explanations: use one short sentence before the diagram and one short takeaway after it.
 
+## Reference
+
+- Read [references/diagram-patterns.md](references/diagram-patterns.md) before choosing a Mermaid layout direction.
+
 ## Output Standard
 
 The diagram should feel calm, readable, and publication-ready in a Korean technical blog.
