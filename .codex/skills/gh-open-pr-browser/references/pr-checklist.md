@@ -7,6 +7,7 @@ Use this checklist before opening the browser PR flow.
 - working tree is clean
 - current branch exists and is not detached
 - branch is committed
+- branch commit range is inspectable against its base or upstream
 - upstream exists or can be created
 - `gh` authentication is already valid
 
@@ -16,6 +17,8 @@ Use this checklist before opening the browser PR flow.
 - head branch: current local branch
 - prefilled field: title only
 - PR body: leave for browser editing
+- title basis: summarize all new commits in the PR scope, not only the latest commit
+- title style: natural PR summary, not commit-type convention
 
 ## Stop Conditions
 

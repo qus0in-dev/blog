@@ -42,7 +42,11 @@ Add `--base <branch>` only when the user explicitly asks for a non-default base.
 ## Title Rules
 
 - Use the title the user gave if they already specified one.
-- If the user did not specify a title, derive it from the latest commit or the branch intent and propose it first.
+- If the user did not specify a title, derive it from the full set of new commits on the current branch, not just the latest commit.
+- Summarize the branch as one PR-sized change and write a title that covers the cumulative outcome of those commits.
+- Check recent branch commits against the merge base so the title reflects everything new in the PR scope.
+- The PR title does not need to follow commit message conventions such as Conventional Commits.
+- Prefer a clear natural-language summary over commit-style prefixes.
 - Keep the title concise and ready for direct use in GitHub.
 - Do not auto-fill the body from commits.
 - Do not invent issue references, reviewers, labels, or milestones unless the user asked for them.
@@ -67,6 +71,7 @@ Add `--base <branch>` only when the user explicitly asks for a non-default base.
 - dirty worktree from `git status --short`
 - upstream branch existence from `git rev-parse --abbrev-ref --symbolic-full-name @{u}`
 - ahead/behind state from `git status --short --branch` or equivalent
+- new commit range for the branch relative to its base or upstream
 - remote availability if push is required
 - browser handoff readiness from `references/pr-checklist.md`
 
@@ -85,12 +90,13 @@ Stop and ask the user instead of proceeding when:
 1. Run `git status --short`.
 2. If the worktree is dirty, stop and tell the user what is blocking the PR handoff.
 3. Run `git branch --show-current`.
-4. Verify upstream with `git rev-parse --abbrev-ref --symbolic-full-name @{u}`.
-5. If upstream is missing, push with `git push -u origin <current-branch>`.
-6. If the branch is ahead locally, push it before opening the browser flow.
-7. Build the final command as `gh pr create --web --title "<title>"`.
-8. Run the command.
-9. Tell the user that the GitHub browser flow was opened and they should finish the PR there.
+4. Inspect the branch's new commits relative to its base or upstream and derive one title that covers the full PR scope.
+5. Verify upstream with `git rev-parse --abbrev-ref --symbolic-full-name @{u}`.
+6. If upstream is missing, push with `git push -u origin <current-branch>`.
+7. If the branch is ahead locally, push it before opening the browser flow.
+8. Build the final command as `gh pr create --web --title "<title>"`.
+9. Run the command.
+10. Tell the user that the GitHub browser flow was opened and they should finish the PR there.
 
 ## Output Standard
 
