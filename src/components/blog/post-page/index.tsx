@@ -1,5 +1,6 @@
 import type { RelatedPostCandidate } from "@/lib/blog";
 import type { BlogPost } from "@/lib/blog";
+import { KakaoAd } from "@/components/ads/kakao-ad";
 import { Separator } from "@/components/ui/separator";
 import { UI_LABELS } from "@/consts/ui";
 import { SITE_URL } from "@/consts/site";
@@ -81,6 +82,10 @@ export function PostPage({
           <div className="post-content prose prose-neutral max-w-none prose-headings:scroll-mt-24 prose-headings:font-semibold prose-headings:tracking-[-0.03em] prose-a:text-foreground prose-a:no-underline hover:prose-a:text-muted-foreground prose-pre:rounded-3xl prose-pre:border prose-pre:border-border prose-pre:bg-[#161616] prose-pre:px-5 prose-pre:py-4 prose-blockquote:border-l-2 prose-blockquote:border-border prose-blockquote:pl-4 prose-blockquote:text-muted-foreground prose-hr:border-border">
             {children}
           </div>
+
+          <Separator className="my-8" />
+
+          <KakaoAd />
 
           <Separator className="my-8" />
 

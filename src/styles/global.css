@@ -186,6 +186,16 @@
   .text-sm {
     font-size: 0.95rem;
   }
+
+  .kakao-ad-slot {
+    border-radius: calc(var(--radius) - 2px);
+  }
+
+  .kakao-ad-frame {
+    width: 300px;
+    max-width: 100%;
+    min-height: 250px;
+  }
 }
 
 @layer utilities {
