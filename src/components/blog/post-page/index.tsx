@@ -37,6 +37,7 @@ export function PostPage({
 }: Props) {
   const postHref = `${SITE_URL}/${postSlug}/`;
   const shareTitle = post.data.title;
+  const isKakaoAdEnabled = import.meta.env.PUBLIC_ENABLE_KAKAO_AD === "true";
 
   return (
     <main className="mx-auto flex min-h-screen w-full max-w-7xl flex-col px-4 pb-14 sm:px-6 lg:px-8">
@@ -83,11 +84,15 @@ export function PostPage({
             {children}
           </div>
 
-          <Separator className="my-8" />
-
-          <KakaoAd />
-
-          <Separator className="my-8" />
+          {isKakaoAdEnabled ? (
+            <>
+              <Separator className="my-8" />
+              <KakaoAd />
+              <Separator className="my-8" />
+            </>
+          ) : (
+            <Separator className="my-8" />
+          )}
 
           {headings.length > 0 ? (
             <>
