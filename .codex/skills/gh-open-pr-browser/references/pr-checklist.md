@@ -8,6 +8,7 @@ Use this checklist before opening the browser PR flow.
 - current branch exists and is not detached
 - branch is committed
 - merge target branch is known
+- latest target branch state has been fetched from origin
 - branch commit range is inspectable against the latest merge-base with the target branch
 - upstream exists or can be created
 - `gh` authentication is already valid
@@ -26,6 +27,7 @@ Use this checklist before opening the browser PR flow.
 
 - local changes are still uncommitted
 - target branch is unclear
+- fetching the target branch failed
 - commit range against the target branch is unclear
 - branch push failed
 - `gh` cannot access the repository
