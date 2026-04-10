@@ -3,10 +3,16 @@ type Props = {
   label?: string;
 };
 
+const isKakaoAdEnabled = import.meta.env.PUBLIC_ENABLE_KAKAO_AD === "true";
+
 export function KakaoAd({
   className = "",
   label = "Sponsored",
 }: Props) {
+  if (!isKakaoAdEnabled) {
+    return null;
+  }
+
   return (
     <aside
       className={`kakao-ad-slot border border-border bg-card/80 p-4 ${className}`.trim()}
