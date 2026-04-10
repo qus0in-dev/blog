@@ -42,9 +42,10 @@ Add `--base <branch>` only when the user explicitly asks for a non-default base.
 ## Title Rules
 
 - Use the title the user gave if they already specified one.
-- If the user did not specify a title, derive it from the full set of new commits on the current branch, not just the latest commit.
-- Summarize the branch as one PR-sized change and write a title that covers the cumulative outcome of those commits.
-- Check recent branch commits against the merge base so the title reflects everything new in the PR scope.
+- If the user did not specify a title, derive it from the commits that are new relative to the current merge target branch, not from the entire historical branch.
+- Use the latest merged state of `main`, `master`, or the repository default base branch as the comparison baseline.
+- Summarize only the currently unmerged PR-sized change and write a title that covers that delta.
+- Check recent branch commits against the latest base-branch merge base so the title reflects only what would be included if the PR were opened now.
 - The PR title does not need to follow commit message conventions such as Conventional Commits.
 - Prefer a clear natural-language summary over commit-style prefixes.
 - Keep the title concise and ready for direct use in GitHub.
@@ -53,7 +54,7 @@ Add `--base <branch>` only when the user explicitly asks for a non-default base.
 ## Body Rules
 
 - If the user already gave PR body guidance, use it.
-- Otherwise, derive a short draft body from the full set of new commits on the branch.
+- Otherwise, derive a short draft body from the commits that are new relative to the current merge target branch.
 - Summarize the branch in a few practical bullets, not a long changelog.
 - Prefer a compact structure such as:
 
@@ -89,9 +90,11 @@ Add `--base <branch>` only when the user explicitly asks for a non-default base.
 
 - current branch name from `git branch --show-current`
 - dirty worktree from `git status --short`
+- merge target branch from the repository default base branch, or `main` / `master` when that is the actual merge target
+- latest remote state of the merge target branch before deriving the PR range
 - upstream branch existence from `git rev-parse --abbrev-ref --symbolic-full-name @{u}`
 - ahead/behind state from `git status --short --branch` or equivalent
-- new commit range for the branch relative to its base or upstream
+- new commit range for the branch relative to the latest merge-base with the target branch
 - remote availability if push is required
 - browser handoff readiness from `references/pr-checklist.md`
 
@@ -102,6 +105,8 @@ Stop and ask the user instead of proceeding when:
 - the worktree has unstaged or staged but uncommitted changes
 - the branch name is missing or detached
 - the user has not provided a title and no safe default can be inferred
+- the merge target branch cannot be identified confidently
+- the commit range relative to the target branch cannot be determined safely
 - the branch push fails
 - `gh` authentication or repository access is not ready
 
@@ -110,14 +115,16 @@ Stop and ask the user instead of proceeding when:
 1. Run `git status --short`.
 2. If the worktree is dirty, stop and tell the user what is blocking the PR handoff.
 3. Run `git branch --show-current`.
-4. Inspect the branch's new commits relative to its base or upstream and derive one title that covers the full PR scope.
-5. Derive a short draft PR body from the same commit range.
-6. Verify upstream with `git rev-parse --abbrev-ref --symbolic-full-name @{u}`.
-7. If upstream is missing, push with `git push -u origin <current-branch>`.
-8. If the branch is ahead locally, push it before opening the browser flow.
-9. Build the final command as `gh pr create --web --title "<title>" --body "<body>"`.
-10. Run the command.
-11. Tell the user that the GitHub browser flow was opened and they should finish the PR there.
+4. Identify the merge target branch, preferring the repository default base branch and otherwise the actual `main` or `master`.
+5. Inspect the branch's new commits relative to the latest merge-base with that target branch and derive one title that covers only the current PR scope.
+6. Derive a short draft PR body from the same commit range.
+7. Verify upstream with `git rev-parse --abbrev-ref --symbolic-full-name @{u}`.
+8. If upstream is missing, push with `git push -u origin <current-branch>`.
+9. If the branch is ahead locally, push it before opening the browser flow.
+10. Build the final command as `gh pr create --web --title "<title>" --body "<body>"`.
+11. Add `--base <branch>` when the detected merge target is not what `gh` would infer safely by default.
+12. Run the command.
+13. Tell the user that the GitHub browser flow was opened and they should finish the PR there.
 
 ## Output Standard
 
