@@ -15,10 +15,11 @@ Use this checklist before opening the browser PR flow.
 
 - base branch: repository default
 - head branch: current local branch
-- prefilled field: title only
-- PR body: leave for browser editing
+- prefilled fields: title and short draft body
+- PR body: keep it short and editable in the browser
 - title basis: summarize all new commits in the PR scope, not only the latest commit
 - title style: natural PR summary, not commit-type convention
+- body basis: summarize the same commit range in a few practical bullets
 
 ## Stop Conditions
 
