@@ -39,16 +39,22 @@ Rewrite Korean prose so it reads like a competent human writer, not a translated
 - Keep inline code, examples, and facts intact while improving surrounding prose.
 - Avoid quotation-mark-heavy emphasis when a sentence can stand on its own.
 - Prefer direct Korean explanation over dramatic setup.
+- For technical blog posts, do not present a narrow personal experience as a sweeping rule unless the draft clearly proves it.
+- When the certainty is interpretive rather than absolute, prefer phrasing such as `~라고 볼 수 있다`, `~로 이해할 수 있다`, `~로 파악된다`, `~처럼 보인다`.
+- Remove meta-guide phrases such as `이번 글은`, `다음 글은`, `이 부분을`, `이 글은`, `이 글에서는` unless they are strictly necessary for navigation.
 
 ## Blog Voice Heuristics
 
 - Open with a concrete developer memory, operational moment, or observed confusion before widening the scope.
+- Let the opening anecdote explain why the topic matters, but move quickly from `내 경험` to `정리해보면` or `살펴보면` 같은 분석형 서술로 넘어간다.
 - Frame the article around a distinction of layers, responsibilities, or questions, then keep returning to that frame.
 - Use short glossary-style blockquotes for terms that a reader may know vaguely but not precisely.
 - Prefer comparison tables or short bullet triads when separating adjacent concepts such as tools, layers, or routing models.
 - End with a practical selection rule. The close should answer `언제 무엇을 쓰면 되나` rather than only restating the topic.
 - Allow one light colloquial hook in the title or opening, but keep the body precise and unsentimental.
 - When contrasting past and present stacks, explain what changed in architecture, not just what syntax disappeared.
+- Prefer scoped conclusions over absolute endings. `이 글의 범위에서는`, `이 맥락에서는`, `보통은` 같은 제한 조건이 어울리면 적극적으로 남긴다.
+- Prefer scoped conclusions without article-guide phrasing. Favor `이 맥락에서는`, `보통은`, `대체로`, `실무에서는` over `이번 글은`, `다음 글은`, `이 글에서는`.
 
 ## Mermaid Heuristics
 
@@ -61,17 +67,21 @@ Rewrite Korean prose so it reads like a competent human writer, not a translated
 
 1. Scan for repeated filler phrases and translated sentence endings.
 2. If the draft sounds translated or vague, read `references/style-patterns.md`.
-3. Rewrite headings before polishing paragraphs, so the article structure becomes clear first.
-4. Rewrite paragraph by paragraph, not sentence by sentence in isolation.
-5. Preserve examples, code, and factual claims.
-6. If Mermaid would help, replace only the sections that benefit from diagrammatic explanation.
-7. After rewriting, do one final pass for repeated endings like `-이다`, `-것이다`, `-수 있다`.
-8. Do a Markdown structure pass: frontmatter fields must stay plain text, and headings must not mix `#` markers with bold, code, links, or other inline Markdown.
-9. For technical blog posts, ensure the final draft contains one clear organizing lens such as `세 가지 관점`, `요청 흐름`, or `설계 전환`, and that each section supports that lens.
+3. If the draft sounds too assertive or turns a personal impression into a general rule, read `references/epistemic-tone.md`.
+4. Rewrite headings before polishing paragraphs, so the article structure becomes clear first.
+5. Rewrite paragraph by paragraph, not sentence by sentence in isolation.
+6. Preserve examples, code, and factual claims.
+7. If Mermaid would help, replace only the sections that benefit from diagrammatic explanation.
+8. After rewriting, do one final pass for repeated endings like `-이다`, `-것이다`, `-수 있다`.
+9. Do an epistemic tone pass: reduce over-assertive claims, separate anecdote from general explanation, and keep conclusions scoped to what the article actually established.
+10. Remove article-guide filler such as `이번 글은`, `다음 글은`, `이 부분을`, `이 글은`, `이 글에서는` when the sentence works without them.
+11. Do a Markdown structure pass: frontmatter fields must stay plain text, and headings must not mix `#` markers with bold, code, links, or other inline Markdown.
+12. For technical blog posts, ensure the final draft contains one clear organizing lens such as `세 가지 관점`, `요청 흐름`, or `설계 전환`, and that each section supports that lens.
 
 ## Reference
 
 - Read [references/style-patterns.md](references/style-patterns.md) when the rewrite still sounds translated or overly explained.
+- Read [references/epistemic-tone.md](references/epistemic-tone.md) when the draft feels too certain, too first-person, or too narrowly generalized.
 
 ## Output Standard
 
